@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>McDonald's AI Smart Recommender</title>
+
+<style>
+body {
+  font-family: "Microsoft JhengHei", Arial, sans-serif;
+  background: #db0007;
+  padding: 40px;
+}
+
+.container {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
+
+h1 {
+  color: #db0007;
+  text-align: center;
+}
+
+input, button {
+  width: calc(100% - 24px); /* 向左縮一點 */
+  padding: 12px;
+  margin-top: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+button {
+  background: #ffbc0d;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #ffc72c;
+}
+
+.result {
+  margin-top: 20px;
+  padding: 15px;
+  background: #fff8e1;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.cp {
+  color:#db0007;
+  font-size:20px;
+  font-weight:bold;
+}
+</style>
+
+</head>
+<body>
+
+<div class="container">
+<h1>🍔 麥當勞 AI 智慧推薦系統</h1>
+
+<p>請輸入你的需求（像跟 AI 聊天）</p>
+<input id="userInput" placeholder="例如：我想減脂但要吃飽，預算200元">
+
+<button onclick="aiRecommend()">AI 智慧推薦</button>
+
+<div id="output" class="result"></div>
+</div>
+
+<script>
+const menu = [
+  {name:"大麥克", price:75, fill:8, health:2},
+  {name:"勁辣雞腿堡", price:85, fill:7, health:2},
+  {name:"麥克雞塊6塊", price:99, fill:6, health:3},
+  {name:"薯條(中)", price:55, fill:5, health:1},
+  {name:"可樂", price:38, fill:2, health:0},
+  {name:"沙拉", price:90, fill:4, health:9},
+];
+
+function aiRecommend() {
+  let text = document.getElementById("userInput").value;
+  let budget = 200;
+
+  // 解析預算
+  let match = text.match(/\d+/);
+  if (match) budget = parseInt(match[0]);
+
+  // 假 AI NLP
+  let wantHealth = text.includes("減脂") || text.includes("健康");
+  let wantFull = text.includes("吃飽") || text.includes("很餓");
+
+  let best = [];
+  let bestScore = -1;
+
+  for (let i=0;i<menu.length;i++){
+    for (let j=0;j<menu.length;j++){
+      if (i==j) continue;
+      let combo=[menu[i],menu[j]];
+      let price=combo[0].price+combo[1].price;
+      if(price>budget) continue;
+
+      let fill=combo[0].fill+combo[1].fill;
+      let health=combo[0].health+combo[1].health;
+
+      let score = fill;
+      if (wantHealth) score += health*2;
+      if (!wantHealth) score += fill*2;
+
+      if(score>bestScore){
+        bestScore=score;
+        best=combo;
+      }
+    }
+  }
+
+  let out = "🤖 AI分析結果<br>";
+  out += "預算："+budget+" 元<br><br>";
+  out += "<b>推薦套餐：</b><br>";
+  best.forEach(i=> out+=i.name+" NT$"+i.price+"<br>");
+  let total = best.reduce((s,i)=>s+i.price,0);
+  out += "<b>總價："+total+" 元</b><br>";
+  out += "<span class='cp'>AI 滿意度分數："+bestScore+"</span>";
+
+  document.getElementById("output").innerHTML = out;
+}
+</script>
+
+</body>
+</html>
