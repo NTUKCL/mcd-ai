@@ -2,22 +2,21 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>McDonald's AI Smart Recommender</title>
-
+<title>麥當勞套餐推薦系統</title>
 <style>
 body {
   font-family: "Microsoft JhengHei", Arial, sans-serif;
-  background: #db0007;
-  padding: 40px;
+  background: #f5f5f5;
+  padding: 30px;
 }
 
 .container {
-  max-width: 600px;
+  max-width: 700px;
   margin: auto;
   background: white;
   padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
 }
 
 h1 {
@@ -25,111 +24,147 @@ h1 {
   text-align: center;
 }
 
-input, button {
-  width: calc(100% - 24px); /* 向左縮一點 */
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  box-sizing: border-box;
-}
-
-button {
-  background: #ffbc0d;
-  border: none;
-  font-size: 16px;
-  cursor: pointer;
-  font-weight: bold;
-}
-
-button:hover {
-  background: #ffc72c;
-}
-
-.result {
+.menu-category {
   margin-top: 20px;
-  padding: 15px;
+}
+
+.menu-category h3 {
+  color: #db0007;
+  margin-bottom: 10px;
+}
+
+.menu-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.menu-item {
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s;
+}
+
+.menu-item.selected {
+  border-color: #ffbc0d;
   background: #fff8e1;
-  border-radius: 10px;
+}
+
+#result {
+  margin-top: 20px;
   font-size: 16px;
 }
 
 .cp {
   color:#db0007;
-  font-size:20px;
   font-weight:bold;
 }
 </style>
-
 </head>
 <body>
 
 <div class="container">
-<h1>🍔 麥當勞 AI 智慧推薦系統</h1>
+<h1>🍔 麥當勞套餐推薦系統</h1>
 
-<p>請輸入你的需求（像跟 AI 聊天）</p>
-<input id="userInput" placeholder="例如：我想減脂但要吃飽，預算200元">
+<!-- 主餐 -->
+<div class="menu-category">
+  <h3>主餐</h3>
+  <div class="menu-grid" id="mainGrid"></div>
+</div>
 
-<button onclick="aiRecommend()">AI 智慧推薦</button>
+<!-- 附餐 -->
+<div class="menu-category">
+  <h3>附餐</h3>
+  <div class="menu-grid" id="sideGrid"></div>
+</div>
 
-<div id="output" class="result"></div>
+<!-- 飲料 -->
+<div class="menu-category">
+  <h3>飲料</h3>
+  <div class="menu-grid" id="drinkGrid"></div>
+</div>
+
+<div id="result"></div>
 </div>
 
 <script>
-const menu = [
-  {name:"大麥克", price:75, fill:8, health:2},
-  {name:"勁辣雞腿堡", price:85, fill:7, health:2},
-  {name:"麥克雞塊6塊", price:99, fill:6, health:3},
-  {name:"薯條(中)", price:55, fill:5, health:1},
-  {name:"可樂", price:38, fill:2, health:0},
-  {name:"沙拉", price:90, fill:4, health:9},
+// 菜單資料
+const mainMenu = [
+  {name:"大麥克", price:75, fill:8},
+  {name:"勁辣雞腿堡", price:85, fill:7},
+  {name:"麥克雞塊6塊", price:99, fill:6},
 ];
 
-function aiRecommend() {
-  let text = document.getElementById("userInput").value;
-  let budget = 200;
+const sideMenu = [
+  {name:"薯條(中)", price:55, fill:5},
+  {name:"沙拉", price:90, fill:4},
+];
 
-  // 解析預算
-  let match = text.match(/\d+/);
-  if (match) budget = parseInt(match[0]);
+const drinkMenu = [
+  {name:"可樂", price:38, fill:2},
+  {name:"果汁", price:45, fill:3},
+];
 
-  // 假 AI NLP
-  let wantHealth = text.includes("減脂") || text.includes("健康");
-  let wantFull = text.includes("吃飽") || text.includes("很餓");
+let selectedMain = [];
+let selectedSide = [];
+let selectedDrink = [];
 
-  let best = [];
-  let bestScore = -1;
-
-  for (let i=0;i<menu.length;i++){
-    for (let j=0;j<menu.length;j++){
-      if (i==j) continue;
-      let combo=[menu[i],menu[j]];
-      let price=combo[0].price+combo[1].price;
-      if(price>budget) continue;
-
-      let fill=combo[0].fill+combo[1].fill;
-      let health=combo[0].health+combo[1].health;
-
-      let score = fill;
-      if (wantHealth) score += health*2;
-      if (!wantHealth) score += fill*2;
-
-      if(score>bestScore){
-        bestScore=score;
-        best=combo;
+// 生成菜單函數
+function generateMenu(menuArray, containerId, selectedArray) {
+  const container = document.getElementById(containerId);
+  menuArray.forEach((item,index)=>{
+    const div = document.createElement("div");
+    div.className = "menu-item";
+    div.innerText = `${item.name} NT$${item.price}`;
+    
+    div.onclick = () => {
+      if(selectedArray.includes(index)){
+        selectedArray.splice(selectedArray.indexOf(index),1);
+        div.classList.remove("selected");
+      } else {
+        selectedArray.push(index);
+        div.classList.add("selected");
       }
-    }
+      updateResult();
+    };
+    container.appendChild(div);
+  });
+}
+
+// 生成所有菜單
+generateMenu(mainMenu,"mainGrid",selectedMain);
+generateMenu(sideMenu,"sideGrid",selectedSide);
+generateMenu(drinkMenu,"drinkGrid",selectedDrink);
+
+// 計算組合、總價、CP值
+function updateResult(){
+  let allSelected = [
+    ...selectedMain.map(i=>mainMenu[i]),
+    ...selectedSide.map(i=>sideMenu[i]),
+    ...selectedDrink.map(i=>drinkMenu[i])
+  ];
+
+  if(allSelected.length===0){
+    document.getElementById("result").innerHTML="";
+    return;
   }
 
-  let out = "🤖 AI分析結果<br>";
-  out += "預算："+budget+" 元<br><br>";
-  out += "<b>推薦套餐：</b><br>";
-  best.forEach(i=> out+=i.name+" NT$"+i.price+"<br>");
-  let total = best.reduce((s,i)=>s+i.price,0);
-  out += "<b>總價："+total+" 元</b><br>";
-  out += "<span class='cp'>AI 滿意度分數："+bestScore+"</span>";
+  let totalPrice = allSelected.reduce((sum,item)=>sum+item.price,0);
+  let totalFill = allSelected.reduce((sum,item)=>sum+item.fill,0);
+  let cp = (totalFill/totalPrice).toFixed(3);
 
-  document.getElementById("output").innerHTML = out;
+  let text = "✅ 你的套餐組合：<br>";
+  allSelected.forEach(item=>{
+    text += `${item.name} NT$${item.price}<br>`;
+  });
+
+  text += `<br>總價：${totalPrice} 元<br>`;
+  text += `<span class="cp">CP值：${cp}</span>`;
+
+  document.getElementById("result").innerHTML=text;
 }
 </script>
 
