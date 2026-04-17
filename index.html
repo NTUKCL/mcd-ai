@@ -159,6 +159,7 @@
       padding: 10px 8px 12px;
       text-align: center;
       min-height: 104px;
+      position: relative;
     }
 
     .item-card:hover,
@@ -179,17 +180,34 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 32px;
+      height: 38px;
       margin-bottom: 6px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.06);
     }
 
     .item-image {
-      max-width: 28px;
-      max-height: 28px;
+      max-width: 36px;
+      max-height: 36px;
       width: auto;
       height: auto;
       object-fit: contain;
       filter: drop-shadow(0 6px 8px rgba(0, 0, 0, 0.18));
+    }
+
+    .item-badge {
+      position: absolute;
+      top: 6px;
+      right: 6px;
+      min-width: 24px;
+      padding: 2px 5px;
+      border-radius: 999px;
+      background: rgba(255, 188, 13, 0.18);
+      color: #fff8df;
+      font-size: 0.62rem;
+      font-weight: 900;
+      line-height: 1.15;
+      text-align: center;
     }
 
     .item-name {
@@ -328,13 +346,13 @@
       }
 
       .item-image-wrap {
-        height: 24px;
+        height: 30px;
         margin-bottom: 4px;
       }
 
       .item-image {
-        max-width: 22px;
-        max-height: 22px;
+        max-width: 28px;
+        max-height: 28px;
       }
 
       .item-name {
@@ -446,12 +464,63 @@
       </svg>
     `);
 
+    const chickenBurgerSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M50 96 C58 54, 162 54, 170 96 Z" fill="#f0b34a"/>
+        <rect x="48" y="101" width="124" height="10" rx="5" fill="#72a23a"/>
+        <rect x="44" y="112" width="132" height="20" rx="10" fill="#d59136"/>
+        <path d="M44 122 C64 104, 154 104, 176 122" fill="#e2a74d"/>
+        <rect x="54" y="141" width="112" height="16" rx="8" fill="#e1a04d"/>
+      </svg>
+    `);
+
     const nuggetsSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
         <ellipse cx="110" cy="162" rx="76" ry="18" fill="#482314" opacity=".2"/>
         <rect x="54" y="110" width="112" height="46" rx="10" fill="#cf1318"/>
         <rect x="50" y="98" width="120" height="24" rx="10" fill="#f8f2db"/>
         <path d="M66 54 C76 42, 96 42, 102 58 C114 42, 136 45, 142 61 C150 56, 164 60, 168 74 C172 88, 160 101, 145 101 H84 C66 101, 55 88, 57 74 C59 63, 65 58, 66 54 Z" fill="#e8b256"/>
+      </svg>
+    `);
+
+    const mushroomBurgerSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M48 94 C58 50, 162 50, 172 94 Z" fill="#efb24a"/>
+        <rect x="48" y="98" width="124" height="10" rx="5" fill="#5d311c"/>
+        <rect x="46" y="110" width="128" height="12" rx="6" fill="#7e4b27"/>
+        <circle cx="86" cy="117" r="9" fill="#92724d"/>
+        <circle cx="110" cy="116" r="9" fill="#92724d"/>
+        <circle cx="134" cy="117" r="9" fill="#92724d"/>
+        <rect x="47" y="132" width="126" height="9" rx="4" fill="#72a23a"/>
+        <rect x="54" y="144" width="112" height="15" rx="8" fill="#e1a04d"/>
+      </svg>
+    `);
+
+    const bltBurgerSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M48 94 C58 50, 162 50, 172 94 Z" fill="#efb24a"/>
+        <rect x="48" y="98" width="124" height="10" rx="5" fill="#5d311c"/>
+        <rect x="46" y="110" width="128" height="12" rx="6" fill="#7e4b27"/>
+        <path d="M50 124 H170" stroke="#b84b35" stroke-width="7" stroke-linecap="round" stroke-dasharray="20 12"/>
+        <rect x="47" y="132" width="126" height="9" rx="4" fill="#72a23a"/>
+        <rect x="54" y="144" width="112" height="15" rx="8" fill="#e1a04d"/>
+      </svg>
+    `);
+
+    const parmesanBurgerSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M48 94 C58 50, 162 50, 172 94 Z" fill="#efb24a"/>
+        <rect x="48" y="98" width="124" height="10" rx="5" fill="#5d311c"/>
+        <rect x="46" y="110" width="128" height="12" rx="6" fill="#7e4b27"/>
+        <path d="M62 120 L80 110 L88 128 Z" fill="#ffd44d"/>
+        <path d="M95 120 L113 110 L121 128 Z" fill="#ffd44d"/>
+        <path d="M128 120 L146 110 L154 128 Z" fill="#ffd44d"/>
+        <rect x="47" y="132" width="126" height="9" rx="4" fill="#72a23a"/>
+        <rect x="54" y="144" width="112" height="15" rx="8" fill="#e1a04d"/>
       </svg>
     `);
 
