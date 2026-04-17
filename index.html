@@ -573,51 +573,6 @@
       </svg>
     `);
 
-    const dessertCardPromoSvg = encodeURIComponent(`
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
-        <defs>
-          <radialGradient id="bg" cx="50%" cy="45%" r="70%">
-            <stop offset="0%" stop-color="#18a8d1"/>
-            <stop offset="100%" stop-color="#bfe12a"/>
-          </radialGradient>
-          <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stop-color="#b4f0f6"/>
-            <stop offset="100%" stop-color="#8ad8df"/>
-          </linearGradient>
-        </defs>
-        <rect width="1200" height="560" fill="url(#bg)"/>
-        <text x="52" y="82" fill="#ffe93a" font-size="56" font-weight="800" font-family="Segoe UI, sans-serif">\ NEW /</text>
-        <g transform="translate(34 116)">
-          <rect x="0" y="0" width="558" height="330" rx="14" fill="url(#panel)" stroke="#58b9c6" stroke-width="4"/>
-          <rect x="0" y="0" width="558" height="42" rx="14" fill="#0d3256"/>
-          <text x="279" y="31" text-anchor="middle" fill="#b8ebf5" font-size="32" font-weight="800" font-family="Segoe UI, sans-serif">A區</text>
-          <line x1="186" y1="42" x2="186" y2="330" stroke="#58b9c6" stroke-width="4"/>
-          <line x1="372" y1="42" x2="372" y2="330" stroke="#58b9c6" stroke-width="4"/>
-          <line x1="0" y1="186" x2="558" y2="186" stroke="#58b9c6" stroke-width="4"/>
-          <text x="56" y="108" fill="#fff" font-size="18" font-weight="800" font-family="Segoe UI, sans-serif">金選那堤、美式咖啡、卡布奇諾</text>
-          <text x="224" y="120" fill="#fff" font-size="20" font-weight="800" font-family="Segoe UI, sans-serif">蜂蜜紅茶、奶茶</text>
-          <text x="414" y="120" fill="#fff" font-size="20" font-weight="800" font-family="Segoe UI, sans-serif">中杯汽水、冰紅茶、綠茶</text>
-          <text x="48" y="264" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">4塊/6塊/10塊麥克雞塊</text>
-          <text x="240" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">大包薯條</text>
-          <text x="420" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">大杯玉米湯</text>
-        </g>
-        <g transform="translate(610 116)">
-          <rect x="0" y="0" width="558" height="330" rx="14" fill="url(#panel)" stroke="#58b9c6" stroke-width="4"/>
-          <rect x="0" y="0" width="558" height="42" rx="14" fill="#0d3256"/>
-          <text x="279" y="31" text-anchor="middle" fill="#b8ebf5" font-size="32" font-weight="800" font-family="Segoe UI, sans-serif">B區</text>
-          <line x1="186" y1="42" x2="186" y2="330" stroke="#58b9c6" stroke-width="4"/>
-          <line x1="372" y1="42" x2="372" y2="330" stroke="#58b9c6" stroke-width="4"/>
-          <line x1="0" y1="186" x2="558" y2="186" stroke="#58b9c6" stroke-width="4"/>
-          <text x="48" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">中杯汽水、中杯冰紅茶</text>
-          <text x="236" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">美式咖啡(冰/熱)</text>
-          <text x="438" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">薯餅</text>
-          <text x="76" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">蛋捲冰淇淋</text>
-          <text x="244" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">小包薯條</text>
-          <text x="436" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">紅茶、奶茶</text>
-        </g>
-      </svg>
-    `);
-
     const beefDeluxeSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
         <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
@@ -631,29 +586,29 @@
     `);
 
     const products = [
-      { id: "big-mac", name: "大麥克®", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "double-cheese-beef", name: "雙層牛肉吉事堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "quarter-pounder", name: "四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
-      { id: "double-quarter-pounder", name: "雙層四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
-      { id: "mcchicken", name: "麥香鷄®", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "double-mcchicken", name: "雙層麥香鷄", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "grilled-chicken", name: "嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "nuggets-6", name: "麥克鷄塊®(6塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "超值全餐" },
-      { id: "nuggets-10", name: "麥克鷄塊®(10塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "超值全餐" },
-      { id: "spicy-chicken", name: "勁辣鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "crispy-original", name: "原味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "超值全餐" },
-      { id: "crispy-spicy", name: "辣味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "超值全餐" },
-      { id: "filet-o-fish", name: "麥香魚®", image: `data:image/svg+xml;charset=UTF-8,${fishSvg}`, subtitle: "超值全餐" },
-      { id: "blt-angus", name: "BLT 安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
-      { id: "blt-chicken", name: "BLT 嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "parmesan-angus", name: "帕瑪森安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
-      { id: "parmesan-chicken", name: "帕瑪森主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "mushroom-angus", name: "蕈菇安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
-      { id: "mushroom-chicken", name: "蕈菇主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
-      { id: "quinoa-salad", name: "藜麥沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
-      { id: "quinoa-fish-salad", name: "藜麥鱈魚沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
-      { id: "quinoa-chicken-salad", name: "藜麥烤鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
-      { id: "quinoa-spicy-salad", name: "藜麥辣脆鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" }
+      { id: "big-mac", name: "大麥克®", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐", badge: "牛" },
+      { id: "double-cheese-beef", name: "雙層牛肉吉事堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "雙層牛", badge: "牛" },
+      { id: "quarter-pounder", name: "四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "厚牛", badge: "牛" },
+      { id: "double-quarter-pounder", name: "雙層四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "雙層厚牛", badge: "牛" },
+      { id: "mcchicken", name: "麥香鷄®", image: `data:image/svg+xml;charset=UTF-8,${chickenBurgerSvg}`, subtitle: "雞堡", badge: "雞" },
+      { id: "double-mcchicken", name: "雙層麥香鷄", image: `data:image/svg+xml;charset=UTF-8,${chickenBurgerSvg}`, subtitle: "雙層雞", badge: "雞" },
+      { id: "grilled-chicken", name: "嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${chickenBurgerSvg}`, subtitle: "嫩煎雞", badge: "雞" },
+      { id: "nuggets-6", name: "麥克鷄塊®(6塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "6塊", badge: "塊" },
+      { id: "nuggets-10", name: "麥克鷄塊®(10塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "10塊", badge: "塊" },
+      { id: "spicy-chicken", name: "勁辣鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${chickenBurgerSvg}`, subtitle: "辣雞", badge: "辣" },
+      { id: "crispy-original", name: "原味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "原味腿", badge: "腿" },
+      { id: "crispy-spicy", name: "辣味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "辣味腿", badge: "腿" },
+      { id: "filet-o-fish", name: "麥香魚®", image: `data:image/svg+xml;charset=UTF-8,${fishSvg}`, subtitle: "魚堡", badge: "魚" },
+      { id: "blt-angus", name: "BLT 安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${bltBurgerSvg}`, subtitle: "BLT牛", badge: "牛" },
+      { id: "blt-chicken", name: "BLT 嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${bltBurgerSvg}`, subtitle: "BLT雞", badge: "雞" },
+      { id: "parmesan-angus", name: "帕瑪森安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${parmesanBurgerSvg}`, subtitle: "帕瑪森牛", badge: "牛" },
+      { id: "parmesan-chicken", name: "帕瑪森主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${parmesanBurgerSvg}`, subtitle: "帕瑪森雞", badge: "雞" },
+      { id: "mushroom-angus", name: "蕈菇安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${mushroomBurgerSvg}`, subtitle: "蕈菇牛", badge: "菇" },
+      { id: "mushroom-chicken", name: "蕈菇主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${mushroomBurgerSvg}`, subtitle: "蕈菇雞", badge: "菇" },
+      { id: "quinoa-salad", name: "藜麥沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "沙拉", badge: "沙" },
+      { id: "quinoa-fish-salad", name: "藜麥鱈魚沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "魚沙拉", badge: "沙" },
+      { id: "quinoa-chicken-salad", name: "藜麥烤鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "雞沙拉", badge: "沙" },
+      { id: "quinoa-spicy-salad", name: "藜麥辣脆鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "辣雞沙拉", badge: "沙" }
     ];
 
     const mealOptions = [
@@ -690,6 +645,7 @@
     function renderProducts() {
       elements.itemsGrid.innerHTML = products.map((product) => `
         <button class="item-card ${state.selectedProductIds.has(product.id) ? "selected" : ""}" type="button" data-product-id="${product.id}">
+          <span class="item-badge">${product.badge}</span>
           <div class="item-image-wrap">
             <img class="item-image" src="${product.image}" alt="${product.name}">
           </div>
@@ -806,7 +762,7 @@
     }
 
     function init() {
-      elements.dessertCardImage.src = `data:image/svg+xml;charset=UTF-8,${dessertCardPromoSvg}`;
+      elements.dessertCardImage.src = "https://www.mcdonalds.com/content/dam/sites/tw/publication/2026/2026%E7%94%9C%E5%BF%83%E5%8D%A1_%E5%84%AA%E6%83%A0%E5%85%A7%E5%AE%B9.jpg";
       renderProducts();
       updateSelectionSummary();
       bindSelectionEvents();
