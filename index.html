@@ -10,7 +10,6 @@
       --panel: rgba(58, 20, 8, 0.92);
       --panel-soft: rgba(255, 255, 255, 0.05);
       --accent: #ffbc0d;
-      --accent-strong: #ff8b00;
       --text: #fff7e6;
       --muted: #f4d3a1;
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
@@ -37,7 +36,7 @@
     }
 
     .shell {
-      max-width: 1180px;
+      max-width: 1160px;
       margin: 0 auto;
       padding: 20px 16px 40px;
     }
@@ -67,22 +66,19 @@
         rgba(39, 14, 7, 0.92);
     }
 
-    h1,
-    h2,
-    h3,
-    p {
+    h1, h2, h3, p {
       margin: 0;
     }
 
     h1 {
-      font-size: clamp(1.9rem, 4vw, 2.8rem);
+      font-size: clamp(1.8rem, 4vw, 2.7rem);
       letter-spacing: 0.02em;
     }
 
     .subhead {
       margin-top: 10px;
       color: var(--muted);
-      font-size: 0.98rem;
+      font-size: 0.96rem;
     }
 
     .panel-header,
@@ -126,28 +122,21 @@
     }
 
     .items-grid,
-    .combo-grid,
-    .sweet-card-grid {
+    .combo-grid {
       display: grid;
       gap: 14px;
     }
 
     .items-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
 
     .combo-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
-    .sweet-card-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 18px;
-    }
-
     .item-card,
-    .combo-card,
-    .sweet-card {
+    .combo-card {
       border-radius: var(--radius-lg);
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: var(--panel-soft);
@@ -156,21 +145,19 @@
 
     .item-card {
       cursor: pointer;
-      padding: 16px 14px 18px;
+      padding: 14px 12px 16px;
       text-align: center;
-      min-height: 240px;
+      min-height: 156px;
     }
 
     .item-card:hover,
     .combo-card:hover,
-    .sweet-card:hover,
     .btn:hover {
       transform: translateY(-1px);
       filter: brightness(1.05);
     }
 
     .item-card.selected,
-    .sweet-card.selected,
     .combo-card.featured {
       background: linear-gradient(180deg, rgba(255, 218, 97, 0.18), rgba(255, 125, 29, 0.14));
       border-color: rgba(255, 209, 92, 0.78);
@@ -181,39 +168,38 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 132px;
-      margin-bottom: 12px;
+      height: 72px;
+      margin-bottom: 10px;
     }
 
     .item-image {
-      max-width: 118px;
-      max-height: 118px;
+      max-width: 76px;
+      max-height: 76px;
       width: auto;
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 16px 18px rgba(0, 0, 0, 0.28));
+      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.24));
     }
 
     .item-name {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 800;
       color: #fff7de;
+      line-height: 1.35;
     }
 
-    .item-price {
+    .item-subtext {
       margin-top: 8px;
       color: #ffe7b3;
       font-weight: 700;
-      font-size: 0.95rem;
+      font-size: 0.86rem;
     }
 
-    .combo-card,
-    .sweet-card {
+    .combo-card {
       padding: 18px;
     }
 
-    .combo-top,
-    .sweet-top {
+    .combo-top {
       display: flex;
       justify-content: space-between;
       gap: 10px;
@@ -221,18 +207,18 @@
       margin-bottom: 10px;
     }
 
-    .combo-title,
-    .sweet-title {
-      font-size: 1.04rem;
+    .combo-title {
+      font-size: 1.02rem;
       color: #fff7de;
       font-weight: 800;
+      line-height: 1.4;
     }
 
-    .combo-price,
-    .sweet-price {
+    .combo-price {
       color: #ffd05f;
       font-weight: 900;
       white-space: nowrap;
+      font-size: 0.92rem;
     }
 
     .combo-tags {
@@ -248,13 +234,14 @@
       background: rgba(255, 255, 255, 0.08);
       border: 1px solid rgba(255, 255, 255, 0.08);
       color: #ffebbd;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
     }
 
-    .sweet-copy {
+    .combo-note {
+      margin-top: 12px;
       color: var(--muted);
+      font-size: 0.88rem;
       line-height: 1.6;
-      font-size: 0.94rem;
     }
 
     .btn {
@@ -293,11 +280,19 @@
       text-align: center;
     }
 
-    @media (max-width: 900px) {
-      .items-grid,
-      .combo-grid,
-      .sweet-card-grid {
+    @media (max-width: 980px) {
+      .items-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .combo-grid {
         grid-template-columns: 1fr;
+      }
+
+      .items-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
       .toolbar,
@@ -324,15 +319,6 @@
       <section class="panel">
         <div class="panel-body">
           <div id="itemsGrid" class="items-grid"></div>
-        </div>
-      </section>
-
-      <section class="panel" style="margin-top: 20px;">
-        <div class="panel-header">
-          <h2 class="panel-title">甜心卡</h2>
-        </div>
-        <div class="panel-body">
-          <div id="sweetCardGrid" class="sweet-card-grid"></div>
         </div>
       </section>
     </section>
@@ -370,7 +356,6 @@
             <stop offset="100%" stop-color="#d10915"/>
           </linearGradient>
         </defs>
-        <rect width="220" height="220" fill="none"/>
         <g transform="translate(28 20)">
           <rect x="20" y="10" width="18" height="94" rx="8" fill="url(#fry)" transform="rotate(-6 29 57)"/>
           <rect x="38" y="2" width="18" height="106" rx="8" fill="url(#fry)" transform="rotate(2 47 55)"/>
@@ -389,7 +374,6 @@
 
     const burgerSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-        <rect width="220" height="220" fill="none"/>
         <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
         <path d="M50 96 C58 54, 162 54, 170 96 Z" fill="#f0b34a"/>
         <circle cx="82" cy="77" r="4" fill="#fff2bc"/>
@@ -406,94 +390,116 @@
 
     const nuggetsSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-        <rect width="220" height="220" fill="none"/>
         <ellipse cx="110" cy="162" rx="76" ry="18" fill="#482314" opacity=".2"/>
         <rect x="54" y="110" width="112" height="46" rx="10" fill="#cf1318"/>
         <rect x="50" y="98" width="120" height="24" rx="10" fill="#f8f2db"/>
         <path d="M66 54 C76 42, 96 42, 102 58 C114 42, 136 45, 142 61 C150 56, 164 60, 168 74 C172 88, 160 101, 145 101 H84 C66 101, 55 88, 57 74 C59 63, 65 58, 66 54 Z" fill="#e8b256"/>
-        <path d="M86 46 C96 36, 118 37, 126 52 C138 42, 157 48, 159 61" fill="none" stroke="#f8d68f" stroke-width="8" stroke-linecap="round"/>
       </svg>
     `);
 
     const colaSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-        <rect width="220" height="220" fill="none"/>
         <ellipse cx="110" cy="170" rx="62" ry="16" fill="#482314" opacity=".2"/>
         <path d="M78 40 H142 L132 156 C131 166, 124 174, 110 174 C96 174, 89 166, 88 156 Z" fill="#d91d24"/>
         <path d="M80 56 H140" stroke="#fff5da" stroke-width="8" stroke-linecap="round"/>
         <path d="M100 28 H144" stroke="#ffe897" stroke-width="8" stroke-linecap="round"/>
         <path d="M144 28 L128 54" stroke="#ffe897" stroke-width="8" stroke-linecap="round"/>
-        <path d="M95 98 C103 88, 117 88, 125 98" fill="none" stroke="#ffd11b" stroke-width="8" stroke-linecap="round"/>
-        <path d="M95 98 C95 87, 103 80, 110 80 C117 80, 125 87, 125 98" fill="none" stroke="#ffd11b" stroke-width="8" stroke-linecap="round"/>
       </svg>
     `);
 
     const pieSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-        <rect width="220" height="220" fill="none"/>
         <ellipse cx="110" cy="164" rx="72" ry="18" fill="#482314" opacity=".2"/>
         <path d="M56 118 L108 58 L164 112 L114 162 Z" fill="#e5a147"/>
         <path d="M66 118 L108 76 L152 112 L112 150 Z" fill="#f8c45c"/>
-        <path d="M88 92 H122" stroke="#cc6f1a" stroke-width="7" stroke-linecap="round"/>
-        <path d="M81 104 H130" stroke="#cc6f1a" stroke-width="7" stroke-linecap="round"/>
-        <path d="M74 116 H138" stroke="#cc6f1a" stroke-width="7" stroke-linecap="round"/>
       </svg>
     `);
 
-    const sweetCardSvg = encodeURIComponent(`
+    const saladSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
-        <defs>
-          <linearGradient id="c1" x1="0" x2="1">
-            <stop offset="0%" stop-color="#ff5d6c"/>
-            <stop offset="100%" stop-color="#ffbc0d"/>
-          </linearGradient>
-        </defs>
-        <rect width="220" height="220" fill="none"/>
-        <rect x="30" y="52" width="160" height="110" rx="18" fill="url(#c1)"/>
-        <rect x="30" y="74" width="160" height="20" fill="rgba(255,255,255,.22)"/>
-        <text x="110" y="128" text-anchor="middle" fill="#fff7de" font-size="30" font-family="Segoe UI, sans-serif" font-weight="700">甜心卡</text>
+        <ellipse cx="110" cy="162" rx="72" ry="18" fill="#482314" opacity=".18"/>
+        <path d="M54 118 C62 152, 158 152, 166 118 Z" fill="#f4f0e7"/>
+        <circle cx="88" cy="103" r="24" fill="#7fc34b"/>
+        <circle cx="118" cy="98" r="22" fill="#9bd25c"/>
+        <circle cx="136" cy="118" r="20" fill="#6fb13f"/>
+        <circle cx="94" cy="126" r="18" fill="#b3db6a"/>
+      </svg>
+    `);
+
+    const chickenSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="164" rx="72" ry="18" fill="#482314" opacity=".2"/>
+        <path d="M78 62 C92 48, 118 48, 132 62 C147 77, 148 111, 130 132 C113 151, 88 150, 72 132 C55 113, 58 80, 78 62 Z" fill="#d79a44"/>
+        <circle cx="71" cy="55" r="12" fill="#f3ece2"/>
+        <circle cx="145" cy="55" r="12" fill="#f3ece2"/>
+      </svg>
+    `);
+
+    const fishSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M50 96 C58 54, 162 54, 170 96 Z" fill="#f0b34a"/>
+        <rect x="48" y="104" width="124" height="11" rx="5" fill="#64a9d8"/>
+        <rect x="46" y="116" width="128" height="15" rx="7" fill="#f7d070"/>
+        <rect x="48" y="131" width="124" height="10" rx="5" fill="#72a23a"/>
+        <rect x="54" y="141" width="112" height="16" rx="8" fill="#e1a04d"/>
+      </svg>
+    `);
+
+    const beefDeluxeSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+        <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
+        <path d="M48 94 C58 50, 162 50, 172 94 Z" fill="#efb24a"/>
+        <rect x="48" y="98" width="124" height="10" rx="5" fill="#5d311c"/>
+        <rect x="46" y="110" width="128" height="12" rx="6" fill="#7e4b27"/>
+        <rect x="48" y="123" width="124" height="9" rx="4" fill="#ffd93f"/>
+        <rect x="47" y="134" width="126" height="9" rx="4" fill="#72a23a"/>
+        <rect x="54" y="144" width="112" height="15" rx="8" fill="#e1a04d"/>
       </svg>
     `);
 
     const products = [
-      { id: "nuggets", name: "麥克雞塊", price: 99, image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}` },
-      { id: "big-mac", name: "大麥克", price: 75, image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}` },
-      { id: "spicy-chicken", name: "勁辣雞腿堡", price: 85, image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}` },
-      { id: "fries", name: "薯條", price: 55, image: `data:image/svg+xml;charset=UTF-8,${friesSvg}` },
-      { id: "cola", name: "可樂", price: 38, image: `data:image/svg+xml;charset=UTF-8,${colaSvg}` },
-      { id: "apple-pie", name: "蘋果派", price: 38, image: `data:image/svg+xml;charset=UTF-8,${pieSvg}` }
+      { id: "big-mac", name: "大麥克®", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "double-cheese-beef", name: "雙層牛肉吉事堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "quarter-pounder", name: "四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
+      { id: "double-quarter-pounder", name: "雙層四盎司牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
+      { id: "mcchicken", name: "麥香鷄®", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "double-mcchicken", name: "雙層麥香鷄", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "grilled-chicken", name: "嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "nuggets-6", name: "麥克鷄塊®(6塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "超值全餐" },
+      { id: "nuggets-10", name: "麥克鷄塊®(10塊)", image: `data:image/svg+xml;charset=UTF-8,${nuggetsSvg}`, subtitle: "超值全餐" },
+      { id: "spicy-chicken", name: "勁辣鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "crispy-original", name: "原味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "超值全餐" },
+      { id: "crispy-spicy", name: "辣味麥脆鷄腿(2塊)", image: `data:image/svg+xml;charset=UTF-8,${chickenSvg}`, subtitle: "超值全餐" },
+      { id: "filet-o-fish", name: "麥香魚®", image: `data:image/svg+xml;charset=UTF-8,${fishSvg}`, subtitle: "超值全餐" },
+      { id: "blt-angus", name: "BLT 安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
+      { id: "blt-chicken", name: "BLT 嫩煎鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "parmesan-angus", name: "帕瑪森安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
+      { id: "parmesan-chicken", name: "帕瑪森主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "mushroom-angus", name: "蕈菇安格斯牛肉堡", image: `data:image/svg+xml;charset=UTF-8,${beefDeluxeSvg}`, subtitle: "超值全餐" },
+      { id: "mushroom-chicken", name: "蕈菇主廚鷄腿堡", image: `data:image/svg+xml;charset=UTF-8,${burgerSvg}`, subtitle: "超值全餐" },
+      { id: "quinoa-salad", name: "藜麥沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
+      { id: "quinoa-fish-salad", name: "藜麥鱈魚沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
+      { id: "quinoa-chicken-salad", name: "藜麥烤鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" },
+      { id: "quinoa-spicy-salad", name: "藜麥辣脆鷄沙拉", image: `data:image/svg+xml;charset=UTF-8,${saladSvg}`, subtitle: "超值全餐" }
     ];
 
-    const comboCatalog = [
-      { id: "combo-nuggets-classic", title: "雞塊經典套餐", price: 192, items: ["nuggets", "fries", "cola"] },
-      { id: "combo-nuggets-share", title: "雞塊加量分享餐", price: 237, items: ["nuggets", "cola", "apple-pie"] },
-      { id: "combo-nuggets-light", title: "雞塊輕鬆配", price: 137, items: ["nuggets", "cola"] },
-      { id: "combo-bigmac-classic", title: "大麥克經典套餐", price: 168, items: ["big-mac", "fries", "cola"] },
-      { id: "combo-bigmac-snack", title: "大麥克點心餐", price: 113, items: ["big-mac", "cola"] },
-      { id: "combo-spicy-full", title: "勁辣雞腿堡超值餐", price: 178, items: ["spicy-chicken", "fries", "cola"] },
-      { id: "combo-spicy-dessert", title: "勁辣雞腿堡甜點餐", price: 161, items: ["spicy-chicken", "apple-pie", "cola"] },
-      { id: "combo-fries-drink", title: "薯條飲料輕享組", price: 93, items: ["fries", "cola"] },
-      { id: "combo-fries-dessert", title: "薯條甜點組", price: 93, items: ["fries", "apple-pie"] },
-      { id: "combo-cola-dessert", title: "飲料甜點組", price: 76, items: ["cola", "apple-pie"] },
-      { id: "combo-cola-burger", title: "漢堡飲料組", price: 113, items: ["big-mac", "cola"] },
-      { id: "combo-apple-pie-drink", title: "蘋果派點心餐", price: 76, items: ["apple-pie", "cola"] }
-    ];
-
-    const sweetCardOptions = [
-      { id: "dessert-card", title: "甜心卡加購", price: 39, copy: "可搭配常用買 A 送 B 優惠", image: `data:image/svg+xml;charset=UTF-8,${sweetCardSvg}` },
-      { id: "dessert-card-bundle", title: "甜心卡套餐搭配", price: 69, copy: "適合需要常態優惠的點餐方式", image: `data:image/svg+xml;charset=UTF-8,${sweetCardSvg}` }
+    const mealOptions = [
+      { id: "classic", name: "經典配餐", items: ["中薯", "$38 冷/熱飲"] },
+      { id: "fresh", name: "清爽配餐", items: ["四季沙拉", "$38 冷/熱飲"] },
+      { id: "crispy", name: "勁脆配餐", items: ["麥脆鷄腿一塊", "$38 冷/熱飲"] },
+      { id: "mcflurry", name: "炫冰配餐", items: ["OREO 冰炫風", "小薯", "$38 冷/熱飲"] },
+      { id: "hearty", name: "豪吃配餐", items: ["6塊麥克鷄塊", "小薯", "$38 冷/熱飲"] }
     ];
 
     const state = {
-      selectedProductIds: new Set(),
-      selectedSweetCardId: null
+      selectedProductIds: new Set()
     };
 
     const elements = {
       selectedCount: document.getElementById("selectedCount"),
       nextButton: document.getElementById("nextButton"),
       itemsGrid: document.getElementById("itemsGrid"),
-      sweetCardGrid: document.getElementById("sweetCardGrid"),
       comboResults: document.getElementById("comboResults"),
       selectedItemsText: document.getElementById("selectedItemsText"),
       backButton: document.getElementById("backButton"),
@@ -502,22 +508,8 @@
       comboScreen: document.getElementById("comboScreen")
     };
 
-    function formatCurrency(value) {
-      return `NT$${value}`;
-    }
-
     function getSelectedProducts() {
       return products.filter((product) => state.selectedProductIds.has(product.id));
-    }
-
-    function getMatchingCombos() {
-      if (state.selectedProductIds.size === 0) {
-        return [];
-      }
-
-      return comboCatalog
-        .filter((combo) => [...state.selectedProductIds].every((itemId) => combo.items.includes(itemId)))
-        .sort((a, b) => a.price - b.price);
     }
 
     function renderProducts() {
@@ -527,64 +519,45 @@
             <img class="item-image" src="${product.image}" alt="${product.name}">
           </div>
           <div class="item-name">${product.name}</div>
-          <div class="item-price">${formatCurrency(product.price)}</div>
+          <div class="item-subtext">${product.subtitle}</div>
         </button>
       `).join("");
     }
 
-    function renderSweetCards() {
-      elements.sweetCardGrid.innerHTML = sweetCardOptions.map((option) => `
-        <button class="sweet-card ${state.selectedSweetCardId === option.id ? "selected" : ""}" type="button" data-sweet-card-id="${option.id}">
-          <div class="sweet-top">
-            <div class="sweet-title">${option.title}</div>
-            <div class="sweet-price">${formatCurrency(option.price)}</div>
-          </div>
-          <div class="item-image-wrap" style="height:104px; margin-bottom: 8px;">
-            <img class="item-image" src="${option.image}" alt="${option.title}" style="max-height:96px;">
-          </div>
-          <div class="sweet-copy">${option.copy}</div>
-        </button>
-      `).join("");
+    function buildComboCards() {
+      return getSelectedProducts().flatMap((product) =>
+        mealOptions.map((option) => ({
+          id: `${product.id}-${option.id}`,
+          title: `${product.name} + ${option.name}`,
+          note: "價格依各地區麥當勞餐廳價目表供應為準",
+          priceLabel: "門市價",
+          tags: [product.name, ...option.items]
+        }))
+      );
     }
 
     function renderCombos() {
-      const selectedProducts = getSelectedProducts();
-      const combos = getMatchingCombos();
-      const selectedNames = selectedProducts.map((product) => product.name);
-
-      if (state.selectedSweetCardId) {
-        const sweetCard = sweetCardOptions.find((option) => option.id === state.selectedSweetCardId);
-        if (sweetCard) {
-          selectedNames.push(sweetCard.title);
-        }
-      }
-
+      const comboCards = buildComboCards();
+      const selectedNames = getSelectedProducts().map((product) => product.name);
       elements.selectedItemsText.textContent = selectedNames.length ? selectedNames.join("、") : "-";
 
-      if (combos.length === 0) {
-        elements.comboResults.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">目前沒有符合這些品項的套餐</div>';
+      if (comboCards.length === 0) {
+        elements.comboResults.innerHTML = '<div class="empty-state" style="grid-column: 1 / -1;">請先選擇品項</div>';
         return;
       }
 
-      elements.comboResults.innerHTML = combos.map((combo, index) => {
-        const includedNames = combo.items.map((itemId) => {
-          const product = products.find((entry) => entry.id === itemId);
-          return product ? product.name : itemId;
-        });
-
-        return `
-          <article class="combo-card ${index === 0 ? "featured" : ""}">
-            <div class="combo-top">
-              <div class="combo-title">${combo.title}</div>
-              <div class="combo-price">${formatCurrency(combo.price)}</div>
-            </div>
-            <div class="combo-tags">
-              ${index === 0 ? '<span class="tag">推薦</span>' : ""}
-              ${includedNames.map((name) => `<span class="tag">${name}</span>`).join("")}
-            </div>
-          </article>
-        `;
-      }).join("");
+      elements.comboResults.innerHTML = comboCards.map((combo, index) => `
+        <article class="combo-card ${index === 0 ? "featured" : ""}">
+          <div class="combo-top">
+            <div class="combo-title">${combo.title}</div>
+            <div class="combo-price">${combo.priceLabel}</div>
+          </div>
+          <div class="combo-tags">
+            ${combo.tags.map((tag) => `<span class="tag">${tag}</span>`).join("")}
+          </div>
+          <div class="combo-note">${combo.note}</div>
+        </article>
+      `).join("");
     }
 
     function updateSelectionSummary() {
@@ -609,12 +582,6 @@
       bindSelectionEvents();
     }
 
-    function toggleSweetCard(optionId) {
-      state.selectedSweetCardId = state.selectedSweetCardId === optionId ? null : optionId;
-      renderSweetCards();
-      bindSelectionEvents();
-    }
-
     function goToComboScreen() {
       renderCombos();
       showScreen("combo");
@@ -622,9 +589,7 @@
 
     function resetAll() {
       state.selectedProductIds.clear();
-      state.selectedSweetCardId = null;
       renderProducts();
-      renderSweetCards();
       updateSelectionSummary();
       bindSelectionEvents();
       showScreen("selection");
@@ -634,12 +599,6 @@
       document.querySelectorAll("[data-product-id]").forEach((button) => {
         button.addEventListener("click", () => {
           toggleProduct(button.dataset.productId);
-        });
-      });
-
-      document.querySelectorAll("[data-sweet-card-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          toggleSweetCard(button.dataset.sweetCardId);
         });
       });
     }
@@ -652,7 +611,6 @@
 
     function init() {
       renderProducts();
-      renderSweetCards();
       updateSelectionSummary();
       bindSelectionEvents();
       bindGlobalEvents();
