@@ -1,194 +1,998 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>麥當勞套餐推薦系統</title>
-<style>
-body {
-  font-family: "Microsoft JhengHei", Arial, sans-serif;
-  background: #f5f5f5;
-  padding: 30px;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>麥當勞智慧推薦系統</title>
+  <style>
+    :root {
+      --bg: #180b06;
+      --bg-soft: #2b1209;
+      --panel: rgba(48, 19, 8, 0.84);
+      --panel-strong: rgba(70, 26, 10, 0.94);
+      --card: linear-gradient(180deg, #fff4d7 0%, #ffd85b 100%);
+      --card-dark: linear-gradient(180deg, #4d1d0d 0%, #2b1008 100%);
+      --accent: #ffbc0d;
+      --accent-2: #ffdd65;
+      --danger: #ff4d32;
+      --text: #fff7e4;
+      --muted: #f5d8a4;
+      --success: #73ffb3;
+      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      --glow: 0 0 0 1px rgba(255, 216, 91, 0.28), 0 10px 30px rgba(255, 164, 31, 0.18);
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 16px;
+      --radius-sm: 12px;
+      --transition: 180ms ease;
+    }
 
-.container {
-  max-width: 700px;
-  margin: auto;
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-}
+    * {
+      box-sizing: border-box;
+    }
 
-h1 {
-  color: #db0007;
-  text-align: center;
-}
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Noto Sans TC", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255, 188, 13, 0.22), transparent 30%),
+        radial-gradient(circle at top right, rgba(255, 77, 50, 0.18), transparent 24%),
+        linear-gradient(135deg, #120704 0%, #220d07 45%, #0d0604 100%);
+      min-height: 100vh;
+    }
 
-.menu-category {
-  margin-top: 20px;
-}
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 32px 20px 56px;
+    }
 
-.menu-category h3 {
-  color: #db0007;
-  margin-bottom: 10px;
-}
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 28px;
+      border-radius: var(--radius-xl);
+      background:
+        linear-gradient(135deg, rgba(255, 188, 13, 0.18), rgba(255, 77, 50, 0.12)),
+        rgba(39, 14, 7, 0.88);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 215, 93, 0.18);
+      margin-bottom: 24px;
+    }
 
-.menu-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-}
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: auto -60px -60px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 188, 13, 0.4), transparent 65%);
+      pointer-events: none;
+    }
 
-/* 楓之谷風格文字按鈕 */
-.menu-item {
-  border-radius: 8px;
-  border: 3px solid #4d2e00; /* 深色邊框 */
-  background: linear-gradient(to bottom, #ffcc33 0%, #ff9900 100%); /* 漸層金色 */
-  color: #4d2e00; /* 文字顏色 */
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  padding: 12px 20px;
-  user-select: none;
-  text-shadow: 1px 1px 0 #fff8e1; /* 字高光 */
-  box-shadow: 0 4px 0 #4d2e00, 0 6px 6px rgba(0,0,0,0.3);
-  transition: all 0.1s ease-in-out;
-  min-width: 100px;
-}
+    .hero-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
 
-/* 懸浮效果 */
-.menu-item:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 0 #4d2e00, 0 8px 8px rgba(0,0,0,0.3);
-}
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 188, 13, 0.14);
+      color: var(--accent-2);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      margin-bottom: 14px;
+    }
 
-/* 按下去 */
-.menu-item:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 0 #4d2e00, 0 3px 3px rgba(0,0,0,0.2);
-}
+    h1 {
+      margin: 0 0 10px;
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.05;
+    }
 
-/* 選中 */
-.menu-item.selected {
-  border-color: #ffbc0d;
-  background: linear-gradient(to bottom, #fff4b3 0%, #ffe066 100%);
-  box-shadow: 0 6px 0 #4d2e00, 0 8px 8px rgba(0,0,0,0.3);
-}
+    .hero p {
+      margin: 0;
+      max-width: 780px;
+      color: var(--muted);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
 
-#result {
-  margin-top: 20px;
-  font-size: 16px;
-}
+    .hero-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
 
-.cp {
-  color:#db0007;
-  font-weight:bold;
-}
-</style>
+    .hero-badge {
+      padding: 10px 14px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: #ffeec1;
+      font-size: 0.95rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 420px);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 22px;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid rgba(255, 223, 140, 0.14);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 22px 22px 0;
+      flex-wrap: wrap;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+
+    .panel-subtitle {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 0.94rem;
+    }
+
+    .controls {
+      padding: 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: minmax(180px, 280px) 1fr;
+      gap: 16px;
+      align-items: end;
+    }
+
+    .field label {
+      display: block;
+      font-size: 0.92rem;
+      color: #ffe29d;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    .budget-wrap {
+      position: relative;
+    }
+
+    .budget-wrap span {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #7a3b0f;
+      font-weight: 800;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      height: 54px;
+      padding: 0 14px 0 42px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff9eb 0%, #ffe9a4 100%);
+      color: #3a180a;
+      font-size: 1rem;
+      font-weight: 700;
+      outline: none;
+      box-shadow: inset 0 2px 0 rgba(255,255,255,0.75);
+    }
+
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      padding: 14px 18px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 0.98rem;
+      letter-spacing: 0.02em;
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), background var(--transition);
+    }
+
+    .btn:active {
+      transform: translateY(2px) scale(0.99);
+    }
+
+    .btn-primary {
+      color: #4c2000;
+      background: linear-gradient(180deg, #fff2b8 0%, #ffbc0d 52%, #e28a00 100%);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,0.8),
+        0 10px 0 #8f4d08,
+        0 18px 26px rgba(255, 160, 34, 0.28);
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.04);
+      transform: translateY(-1px);
+    }
+
+    .btn-secondary {
+      color: #fff4df;
+      background: linear-gradient(180deg, #7d3218 0%, #4c1e0f 100%);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.15),
+        0 10px 0 #240d07,
+        0 16px 24px rgba(0,0,0,0.22);
+    }
+
+    .btn-secondary:hover {
+      filter: brightness(1.06);
+      transform: translateY(-1px);
+    }
+
+    .menu-section {
+      padding: 0 22px 22px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .menu-card {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 220, 135, 0.18);
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      padding: 16px;
+      min-height: 144px;
+      transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+      cursor: pointer;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 220, 135, 0.34);
+      background: rgba(255,255,255,0.075);
+    }
+
+    .menu-card.selected {
+      background: linear-gradient(180deg, rgba(255, 218, 97, 0.18), rgba(255, 125, 29, 0.15));
+      border-color: rgba(255, 209, 92, 0.78);
+      box-shadow: var(--glow);
+    }
+
+    .menu-card.selected::after {
+      content: "SELECTED";
+      position: absolute;
+      top: 12px;
+      right: -28px;
+      transform: rotate(35deg);
+      width: 124px;
+      text-align: center;
+      padding: 4px 0;
+      font-size: 0.68rem;
+      font-weight: 900;
+      color: #5b2600;
+      background: linear-gradient(180deg, #fff4b7, #ffbc0d);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    .item-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .item-name {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: #fff7de;
+    }
+
+    .item-badge {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255, 188, 13, 0.16);
+      color: #ffe087;
+      font-size: 0.78rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .item-meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 14px;
+    }
+
+    .meta-chip {
+      padding: 8px 10px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.06);
+      color: #ffeac0;
+      font-size: 0.88rem;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 16px;
+      display: grid;
+      gap: 20px;
+    }
+
+    .summary-body,
+    .recommend-body {
+      padding: 0 22px 22px;
+      display: grid;
+      gap: 16px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .stat-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      color: #ffdca1;
+      margin-bottom: 6px;
+    }
+
+    .stat-value {
+      font-size: 1.45rem;
+      font-weight: 900;
+      color: #fff6df;
+    }
+
+    .selected-list,
+    .combo-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .pill {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.07);
+      color: #ffedc9;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+
+    .empty-state {
+      padding: 18px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.05);
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .highlight-card {
+      padding: 18px;
+      border-radius: 22px;
+      background:
+        linear-gradient(180deg, rgba(255, 188, 13, 0.18), rgba(255, 89, 38, 0.12)),
+        rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 216, 91, 0.26);
+      box-shadow: var(--glow);
+    }
+
+    .recommend-title {
+      margin: 0 0 10px;
+      font-size: 1.08rem;
+      color: #fff6d6;
+    }
+
+    .recommend-copy,
+    .hint {
+      margin: 0;
+      color: #ffe4ac;
+      line-height: 1.7;
+    }
+
+    .recommend-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .metric {
+      padding: 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.18);
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      color: white;
+      font-size: 1.12rem;
+      margin-top: 4px;
+    }
+
+    .footer-note {
+      color: #d8b780;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255, 216, 91, 0.35), transparent);
+      margin: 4px 0;
+    }
+
+    @media (max-width: 1080px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        position: static;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding: 18px 14px 40px;
+      }
+
+      .hero,
+      .panel {
+        border-radius: 22px;
+      }
+
+      .controls-grid,
+      .menu-grid,
+      .stats-grid,
+      .recommend-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .panel-header {
+        padding: 18px 18px 0;
+      }
+
+      .controls,
+      .menu-section,
+      .summary-body,
+      .recommend-body {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <main class="shell">
+    <section class="hero">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow">McKiosk Battle Mode</div>
+          <h1>麥當勞智慧推薦系統</h1>
+          <p>
+            選擇主餐、附餐、飲料，自動計算總價、飽足值與 CP 值，
+            同時找出目前預算下最值得點的推薦套餐。介面保留遊戲感與點擊回饋，
+            也方便未來擴充更多菜單、分類、API 或 AI 推薦。
+          </p>
+          <div class="hero-badges">
+            <div class="hero-badge">多分類可複選</div>
+            <div class="hero-badge">最佳 CP 自動推薦</div>
+            <div class="hero-badge">預算內智慧提示</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<div class="container">
-<h1>🍔 麥當勞套餐推薦系統</h1>
+    <section class="layout">
+      <div class="stack">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">點餐控制台</h2>
+              <p class="panel-subtitle">設定預算後，可以自由挑選項目，也能一鍵查看最佳 CP 套餐。</p>
+            </div>
+          </div>
 
-<!-- 主餐 -->
-<div class="menu-category">
-  <h3>主餐</h3>
-  <div class="menu-grid" id="mainGrid"></div>
-</div>
+          <div class="controls">
+            <div class="controls-grid">
+              <div class="field">
+                <label for="budget">預算上限</label>
+                <div class="budget-wrap">
+                  <span>NT$</span>
+                  <input id="budget" type="number" min="0" step="1" value="200" />
+                </div>
+              </div>
 
-<!-- 附餐 -->
-<div class="menu-category">
-  <h3>附餐</h3>
-  <div class="menu-grid" id="sideGrid"></div>
-</div>
+              <div class="actions">
+                <button class="btn btn-primary" id="recommendButton" type="button">智慧推薦</button>
+                <button class="btn btn-secondary" id="clearButton" type="button">清空選擇</button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-<!-- 飲料 -->
-<div class="menu-category">
-  <h3>飲料</h3>
-  <div class="menu-grid" id="drinkGrid"></div>
-</div>
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">主餐選擇</h2>
+              <p class="panel-subtitle">至少選 1 項主餐，系統才會視為完整套餐候選。</p>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div id="mainsGrid" class="menu-grid"></div>
+          </div>
+        </section>
 
-<div id="result"></div>
-</div>
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">附餐選擇</h2>
+              <p class="panel-subtitle">可以自由複選，像遊戲裝備一樣疊加你的套餐配置。</p>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div id="sidesGrid" class="menu-grid"></div>
+          </div>
+        </section>
 
-<script>
-// 菜單資料
-const mainMenu = [
-  {name:"大麥克", price:75, fill:8},
-  {name:"勁辣雞腿堡", price:85, fill:7},
-  {name:"麥克雞塊6塊", price:99, fill:6},
-];
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">飲料選擇</h2>
+              <p class="panel-subtitle">飲料也會一起計入總價、總品項數與 CP 值。</p>
+            </div>
+          </div>
+          <div class="menu-section">
+            <div id="drinksGrid" class="menu-grid"></div>
+          </div>
+        </section>
+      </div>
 
-const sideMenu = [
-  {name:"薯條(中)", price:55, fill:5},
-  {name:"沙拉", price:90, fill:4},
-];
+      <aside class="side-panel">
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">目前套餐</h2>
+              <p class="panel-subtitle">即時顯示你的選擇與核心數據。</p>
+            </div>
+          </div>
 
-const drinkMenu = [
-  {name:"可樂", price:38, fill:2},
-  {name:"果汁", price:45, fill:3},
-];
+          <div class="summary-body">
+            <div class="stats-grid">
+              <div class="stat-card">
+                <div class="stat-label">總品項數量</div>
+                <div class="stat-value" id="itemCount">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">總價格</div>
+                <div class="stat-value" id="totalPrice">NT$0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">總飽足值</div>
+                <div class="stat-value" id="totalFill">0</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">CP 值</div>
+                <div class="stat-value" id="cpScore">0.00</div>
+              </div>
+            </div>
 
-let selectedMain = [];
-let selectedSide = [];
-let selectedDrink = [];
+            <div class="section-divider"></div>
 
-// 生成菜單函數
-function generateMenu(menuArray, containerId, selectedArray){
-  const container = document.getElementById(containerId);
-  menuArray.forEach((item,index)=>{
-    const div = document.createElement("div");
-    div.className = "menu-item";
-    div.innerText = `${item.name} NT$${item.price}`;
-    
-    div.onclick = ()=>{
-      if(selectedArray.includes(index)){
-        selectedArray.splice(selectedArray.indexOf(index),1);
-        div.classList.remove("selected");
-      } else {
-        selectedArray.push(index);
-        div.classList.add("selected");
-      }
-      updateResult();
+            <div>
+              <h3 class="recommend-title">已選組合</h3>
+              <div id="selectedItems" class="selected-list"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">智慧推薦結果</h2>
+              <p class="panel-subtitle">自動掃描所有主餐 + 附餐 + 飲料組合，找出預算內最佳選擇。</p>
+            </div>
+          </div>
+
+          <div class="recommend-body">
+            <div id="bestComboCard" class="highlight-card"></div>
+            <div id="smartHint" class="empty-state"></div>
+            <p class="footer-note">
+              CP 值公式：總飽足值 ÷ 總價格。你之後只要擴充 menuData，就能快速加入更多分類與新菜單。
+            </p>
+          </div>
+        </section>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const menuData = {
+      mains: [
+        { id: "big-mac", name: "大麥克", price: 75, fill: 82, badge: "經典王牌" },
+        { id: "spicy-chicken", name: "勁辣雞腿堡", price: 85, fill: 88, badge: "香辣人氣" },
+        { id: "mcchicken", name: "麥香雞", price: 65, fill: 72, badge: "平衡系" },
+        { id: "double-beef", name: "雙層牛肉吉事堡", price: 79, fill: 84, badge: "高爽感" }
+      ],
+      sides: [
+        { id: "fries-m", name: "薯條(中)", price: 55, fill: 46, badge: "必點王" },
+        { id: "nuggets-6", name: "麥克雞塊 6 塊", price: 99, fill: 68, badge: "蛋白補給" },
+        { id: "corn-soup", name: "玉米濃湯", price: 45, fill: 31, badge: "暖胃系" },
+        { id: "salad", name: "生菜沙拉", price: 52, fill: 26, badge: "輕盈選" }
+      ],
+      drinks: [
+        { id: "cola", name: "可樂", price: 38, fill: 20, badge: "經典搭配" },
+        { id: "sprite", name: "雪碧", price: 38, fill: 19, badge: "清爽感" },
+        { id: "iced-tea", name: "冰紅茶", price: 35, fill: 17, badge: "解膩系" },
+        { id: "hot-coffee", name: "熱咖啡", price: 45, fill: 14, badge: "提神型" }
+      ]
     };
-    container.appendChild(div);
-  });
-}
 
-// 生成所有菜單
-generateMenu(mainMenu,"mainGrid",selectedMain);
-generateMenu(sideMenu,"sideGrid",selectedSide);
-generateMenu(drinkMenu,"drinkGrid",selectedDrink);
+    const categoryMeta = {
+      mains: { label: "主餐", elementId: "mainsGrid" },
+      sides: { label: "附餐", elementId: "sidesGrid" },
+      drinks: { label: "飲料", elementId: "drinksGrid" }
+    };
 
-function updateResult(){
-  let allSelected = [
-    ...selectedMain.map(i=>mainMenu[i]),
-    ...selectedSide.map(i=>sideMenu[i]),
-    ...selectedDrink.map(i=>drinkMenu[i])
-  ];
+    const state = {
+      budget: 200,
+      selectedIds: new Set()
+    };
 
-  if(allSelected.length===0){
-    document.getElementById("result").innerHTML="";
-    return;
-  }
+    const allItems = Object.entries(menuData).flatMap(([category, items]) =>
+      items.map((item) => ({ ...item, category }))
+    );
 
-  let totalPrice = allSelected.reduce((sum,item)=>sum+item.price,0);
-  let totalFill = allSelected.reduce((sum,item)=>sum+item.fill,0);
-  let cp = (totalFill/totalPrice).toFixed(3);
+    const elements = {
+      budgetInput: document.getElementById("budget"),
+      recommendButton: document.getElementById("recommendButton"),
+      clearButton: document.getElementById("clearButton"),
+      itemCount: document.getElementById("itemCount"),
+      totalPrice: document.getElementById("totalPrice"),
+      totalFill: document.getElementById("totalFill"),
+      cpScore: document.getElementById("cpScore"),
+      selectedItems: document.getElementById("selectedItems"),
+      bestComboCard: document.getElementById("bestComboCard"),
+      smartHint: document.getElementById("smartHint")
+    };
 
-  let text = "✅ 你的套餐組合：<br>";
-  allSelected.forEach(item=>{
-    text += `${item.name} NT$${item.price}<br>`;
-  });
+    function formatCurrency(value) {
+      return `NT$${value}`;
+    }
 
-  text += `<br>總價：${totalPrice} 元<br>`;
-  text += `<span class="cp">CP值：${cp}</span>`;
+    function formatCp(value) {
+      return value.toFixed(2);
+    }
 
-  document.getElementById("result").innerHTML=text;
-}
-</script>
+    function getSelectedItems() {
+      return allItems.filter((item) => state.selectedIds.has(item.id));
+    }
 
+    function calculateStats(items) {
+      const totalPrice = items.reduce((sum, item) => sum + item.price, 0);
+      const totalFill = items.reduce((sum, item) => sum + item.fill, 0);
+      const cp = totalPrice > 0 ? totalFill / totalPrice : 0;
+
+      return {
+        totalPrice,
+        totalFill,
+        cp,
+        itemCount: items.length
+      };
+    }
+
+    function getNonEmptySubsets(items) {
+      const subsets = [];
+
+      for (let mask = 1; mask < (1 << items.length); mask += 1) {
+        const subset = items.filter((_, index) => (mask & (1 << index)) !== 0);
+        subsets.push(subset);
+      }
+
+      return subsets;
+    }
+
+    function generateAllComboCandidates() {
+      const mainSets = getNonEmptySubsets(menuData.mains.map((item) => ({ ...item, category: "mains" })));
+      const sideSets = getNonEmptySubsets(menuData.sides.map((item) => ({ ...item, category: "sides" })));
+      const drinkSets = getNonEmptySubsets(menuData.drinks.map((item) => ({ ...item, category: "drinks" })));
+      const combos = [];
+
+      for (const mains of mainSets) {
+        for (const sides of sideSets) {
+          for (const drinks of drinkSets) {
+            const items = [...mains, ...sides, ...drinks];
+            const stats = calculateStats(items);
+
+            combos.push({
+              items,
+              ...stats
+            });
+          }
+        }
+      }
+
+      return combos.sort((a, b) => {
+        if (b.cp !== a.cp) return b.cp - a.cp;
+        if (b.totalFill !== a.totalFill) return b.totalFill - a.totalFill;
+        return a.totalPrice - b.totalPrice;
+      });
+    }
+
+    const comboCandidates = generateAllComboCandidates();
+
+    function findBestComboWithinBudget(budget) {
+      return comboCandidates.find((combo) => combo.totalPrice <= budget) || null;
+    }
+
+    function findCheapestCombo() {
+      return [...comboCandidates].sort((a, b) => a.totalPrice - b.totalPrice)[0] || null;
+    }
+
+    function renderMenuSection(categoryKey) {
+      const { elementId, label } = categoryMeta[categoryKey];
+      const container = document.getElementById(elementId);
+
+      container.innerHTML = menuData[categoryKey]
+        .map((item) => {
+          const isSelected = state.selectedIds.has(item.id);
+
+          return `
+            <button
+              class="menu-card ${isSelected ? "selected" : ""}"
+              type="button"
+              data-item-id="${item.id}"
+              aria-pressed="${isSelected}"
+            >
+              <div class="item-top">
+                <div>
+                  <h3 class="item-name">${item.name}</h3>
+                  <div class="panel-subtitle">${label}</div>
+                </div>
+                <span class="item-badge">${item.badge}</span>
+              </div>
+
+              <div class="item-meta">
+                <span class="meta-chip">價格 ${formatCurrency(item.price)}</span>
+                <span class="meta-chip">飽足值 ${item.fill}</span>
+                <span class="meta-chip">CP ${formatCp(item.fill / item.price)}</span>
+              </div>
+            </button>
+          `;
+        })
+        .join("");
+    }
+
+    function renderAllMenus() {
+      Object.keys(menuData).forEach(renderMenuSection);
+    }
+
+    function renderSelectedSummary() {
+      const selectedItems = getSelectedItems();
+      const stats = calculateStats(selectedItems);
+
+      elements.itemCount.textContent = stats.itemCount;
+      elements.totalPrice.textContent = formatCurrency(stats.totalPrice);
+      elements.totalFill.textContent = stats.totalFill;
+      elements.cpScore.textContent = formatCp(stats.cp);
+
+      if (selectedItems.length === 0) {
+        elements.selectedItems.innerHTML = `
+          <div class="empty-state">
+            尚未選擇任何品項。你可以先自由點餐，或直接使用「智慧推薦」查看最佳 CP 套餐。
+          </div>
+        `;
+        return;
+      }
+
+      elements.selectedItems.innerHTML = selectedItems
+        .map((item) => `<span class="pill">${item.name} · ${formatCurrency(item.price)}</span>`)
+        .join("");
+    }
+
+    function renderBestCombo() {
+      const bestCombo = findBestComboWithinBudget(state.budget);
+      const fallbackCombo = findCheapestCombo();
+
+      if (!bestCombo && !fallbackCombo) {
+        elements.bestComboCard.innerHTML = `
+          <h3 class="recommend-title">目前沒有可用推薦</h3>
+          <p class="recommend-copy">請先建立菜單資料。</p>
+        `;
+        elements.smartHint.innerHTML = `暫時無法計算推薦結果。`;
+        return;
+      }
+
+      if (!bestCombo && fallbackCombo) {
+        elements.bestComboCard.innerHTML = `
+          <h3 class="recommend-title">預算不足以組成完整套餐</h3>
+          <p class="recommend-copy">
+            目前預算 <strong>${formatCurrency(state.budget)}</strong> 無法湊出主餐 + 附餐 + 飲料。
+            最便宜的完整套餐需要 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong>。
+          </p>
+          <div class="combo-list">
+            ${fallbackCombo.items.map((item) => `<span class="pill">${item.name}</span>`).join("")}
+          </div>
+        `;
+
+        elements.smartHint.innerHTML = `
+          建議將預算提高到 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong> 以上，
+          或未來擴充更平價的品項。
+        `;
+        return;
+      }
+
+      elements.bestComboCard.innerHTML = `
+        <h3 class="recommend-title">最佳 CP 值推薦套餐</h3>
+        <p class="recommend-copy">
+          在 <strong>${formatCurrency(state.budget)}</strong> 預算內，
+          目前最值得的完整套餐如下。
+        </p>
+        <div class="combo-list">
+          ${bestCombo.items.map((item) => `<span class="pill">${item.name}</span>`).join("")}
+        </div>
+        <div class="recommend-metrics">
+          <div class="metric">總價<strong>${formatCurrency(bestCombo.totalPrice)}</strong></div>
+          <div class="metric">飽足值<strong>${bestCombo.totalFill}</strong></div>
+          <div class="metric">CP 值<strong>${formatCp(bestCombo.cp)}</strong></div>
+        </div>
+      `;
+
+      renderSmartHint(bestCombo);
+    }
+
+    function renderSmartHint(bestCombo) {
+      const selectedItems = getSelectedItems();
+      const selectedStats = calculateStats(selectedItems);
+
+      if (selectedItems.length === 0) {
+        elements.smartHint.innerHTML = `
+          你還沒開始點餐。上方推薦已經幫你算好目前預算內的最強套餐，
+          也可以先自己選，再讓系統比較是不是有更好的搭配。
+        `;
+        return;
+      }
+
+      if (selectedStats.totalPrice > state.budget) {
+        elements.smartHint.innerHTML = `
+          你目前的選擇總價是 <strong>${formatCurrency(selectedStats.totalPrice)}</strong>，
+          已超過預算 <strong>${formatCurrency(state.budget)}</strong>。
+          可以參考上方推薦，把組合調整回預算內。
+        `;
+        return;
+      }
+
+      const cpGap = bestCombo.cp - selectedStats.cp;
+      const priceGap = bestCombo.totalPrice - selectedStats.totalPrice;
+
+      if (cpGap <= 0.01) {
+        elements.smartHint.innerHTML = `
+          你目前的搭配已經很接近最佳解了，現在 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>。
+          如果你重視個人口味，完全可以照目前這份點。
+        `;
+        return;
+      }
+
+      elements.smartHint.innerHTML = `
+        你目前的 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>，
+        還有更好的搭配可以提升到 <strong>${formatCp(bestCombo.cp)}</strong>。
+        ${priceGap >= 0
+          ? `只要多花 <strong>${formatCurrency(priceGap)}</strong>`
+          : `甚至還能少花 <strong>${formatCurrency(Math.abs(priceGap))}</strong>`}
+        ，就能換到更高效的套餐配置。
+      `;
+    }
+
+    function updateBudget() {
+      const parsedValue = Number(elements.budgetInput.value);
+      state.budget = Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
+    }
+
+    function updateUI() {
+      updateBudget();
+      renderAllMenus();
+      renderSelectedSummary();
+      renderBestCombo();
+      bindMenuEvents();
+    }
+
+    function toggleItemSelection(itemId) {
+      if (state.selectedIds.has(itemId)) {
+        state.selectedIds.delete(itemId);
+      } else {
+        state.selectedIds.add(itemId);
+      }
+
+      updateUI();
+    }
+
+    function clearSelection() {
+      state.selectedIds.clear();
+      updateUI();
+    }
+
+    function bindMenuEvents() {
+      document.querySelectorAll("[data-item-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+          toggleItemSelection(button.dataset.itemId);
+        });
+      });
+    }
+
+    function initEvents() {
+      elements.budgetInput.addEventListener("input", updateUI);
+      elements.recommendButton.addEventListener("click", updateUI);
+      elements.clearButton.addEventListener("click", clearSelection);
+    }
+
+    function init() {
+      initEvents();
+      updateUI();
+    }
+
+    init();
+  </script>
 </body>
 </html>
