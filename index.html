@@ -7,12 +7,9 @@
   <style>
     :root {
       --bg: #160904;
-      --bg-soft: #2a1209;
       --panel: rgba(48, 19, 8, 0.84);
-      --panel-strong: rgba(70, 26, 10, 0.94);
       --accent: #ffbc0d;
       --accent-2: #ffe17c;
-      --danger: #ff5a3d;
       --text: #fff7e4;
       --muted: #f1d19d;
       --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
@@ -20,7 +17,6 @@
       --radius-xl: 28px;
       --radius-lg: 20px;
       --radius-md: 16px;
-      --radius-sm: 12px;
       --transition: 180ms ease;
     }
 
@@ -40,9 +36,9 @@
     }
 
     .shell {
-      max-width: 1360px;
+      max-width: 1380px;
       margin: 0 auto;
-      padding: 28px 18px 48px;
+      padding: 24px 18px 48px;
     }
 
     .hero {
@@ -56,17 +52,6 @@
       box-shadow: var(--shadow);
       border: 1px solid rgba(255, 215, 93, 0.18);
       margin-bottom: 24px;
-    }
-
-    .hero::after {
-      content: "";
-      position: absolute;
-      inset: auto -50px -50px auto;
-      width: 200px;
-      height: 200px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 188, 13, 0.36), transparent 65%);
-      pointer-events: none;
     }
 
     .eyebrow {
@@ -91,8 +76,32 @@
     .hero p {
       margin: 0;
       color: var(--muted);
-      max-width: 880px;
+      max-width: 900px;
       line-height: 1.75;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .hero-chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #ffe8b7;
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .top-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(320px, 420px);
+      gap: 24px;
+      margin-bottom: 24px;
     }
 
     .layout {
@@ -133,7 +142,6 @@
     .panel-title {
       margin: 0;
       font-size: 1.2rem;
-      letter-spacing: 0.02em;
     }
 
     .panel-subtitle {
@@ -147,10 +155,49 @@
     .menu-section,
     .summary-body,
     .recommend-body,
-    .offers-body {
+    .offers-body,
+    .traffic-body {
       padding: 22px;
       display: grid;
       gap: 16px;
+    }
+
+    .recommend-hero {
+      background:
+        linear-gradient(180deg, rgba(255, 188, 13, 0.2), rgba(255, 89, 38, 0.14)),
+        rgba(255,255,255,0.05);
+      border: 1px solid rgba(255, 216, 91, 0.28);
+      box-shadow: var(--glow), var(--shadow);
+    }
+
+    .recommend-hero .panel-header {
+      padding-bottom: 0;
+    }
+
+    .big-recommend {
+      padding: 0 22px 22px;
+    }
+
+    .big-recommend-card {
+      padding: 22px;
+      border-radius: 24px;
+      background:
+        linear-gradient(180deg, rgba(255, 214, 93, 0.16), rgba(255, 108, 34, 0.16)),
+        rgba(255,255,255,0.04);
+      border: 1px solid rgba(255, 222, 120, 0.28);
+      box-shadow: var(--glow);
+    }
+
+    .big-recommend-title {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+      color: #fff7d7;
+    }
+
+    .big-recommend-copy {
+      margin: 0;
+      color: #ffe7b1;
+      line-height: 1.75;
     }
 
     .controls-grid {
@@ -329,7 +376,9 @@
     }
 
     .item-meta,
-    .offer-meta {
+    .offer-meta,
+    .traffic-grid,
+    .recommend-metrics {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -352,37 +401,39 @@
       font-size: 0.92rem;
     }
 
-    .stats-grid,
-    .recommend-metrics {
+    .stats-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
-    .recommend-metrics {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 14px;
-    }
-
     .stat-card,
-    .metric {
+    .metric,
+    .traffic-card {
       padding: 14px;
       border-radius: 18px;
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.06);
     }
 
-    .stat-label {
+    .stat-label,
+    .traffic-label {
       font-size: 0.8rem;
       color: #ffdca1;
       margin-bottom: 6px;
     }
 
     .stat-value,
-    .metric strong {
+    .metric strong,
+    .traffic-value {
       font-size: 1.4rem;
       font-weight: 900;
       color: #fff6df;
+    }
+
+    .recommend-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
     .metric {
@@ -411,46 +462,23 @@
       border: 1px solid rgba(255,255,255,0.07);
     }
 
-    .empty-state,
-    .highlight-card {
+    .empty-state {
       padding: 18px;
       border-radius: 20px;
-    }
-
-    .empty-state {
       background: rgba(255,255,255,0.05);
       color: var(--muted);
       line-height: 1.7;
     }
 
-    .highlight-card {
-      background:
-        linear-gradient(180deg, rgba(255, 188, 13, 0.18), rgba(255, 89, 38, 0.12)),
-        rgba(255,255,255,0.05);
-      border: 1px solid rgba(255, 216, 91, 0.26);
-      box-shadow: var(--glow);
-    }
-
-    .recommend-title {
-      margin: 0 0 10px;
-      font-size: 1.08rem;
-      color: #fff6d6;
-    }
-
-    .recommend-copy,
-    .hint,
     .footer-note {
       margin: 0;
-      color: #ffe4ac;
+      font-size: 0.88rem;
+      color: #d8b780;
       line-height: 1.7;
     }
 
-    .footer-note {
-      font-size: 0.88rem;
-      color: #d8b780;
-    }
-
     @media (max-width: 1080px) {
+      .top-grid,
       .layout {
         grid-template-columns: 1fr;
       }
@@ -471,16 +499,6 @@
       .stats-grid,
       .recommend-metrics {
         grid-template-columns: 1fr;
-      }
-
-      .panel-header,
-      .controls,
-      .menu-section,
-      .summary-body,
-      .recommend-body,
-      .offers-body {
-        padding-left: 18px;
-        padding-right: 18px;
       }
 
       .actions {
@@ -505,8 +523,52 @@
       <h1>麥當勞智慧推薦系統</h1>
       <p>
         自由選主餐、附餐、飲料，系統會即時計算總價、總品項數、飽足值與 CP 值，
-        並自動找出預算內最佳推薦套餐。下方也整合目前官網可見的優惠組合，讓 UI 更像自助點餐機。
+        並自動找出預算內最佳推薦套餐。現在推薦結果已移到頁面上方，進站就能先看到最強搭配。
       </p>
+      <div class="hero-meta">
+        <div class="hero-chip">最佳 CP 自動推薦</div>
+        <div class="hero-chip">優惠組合整理</div>
+        <div class="hero-chip">本機瀏覽人次統計</div>
+      </div>
+    </section>
+
+    <section class="top-grid">
+      <section class="panel recommend-hero">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">智慧推薦結果</h2>
+            <p class="panel-subtitle">放大顯示目前預算內最值得的完整套餐，進站就先看到。</p>
+          </div>
+        </div>
+        <div class="big-recommend">
+          <div id="bestComboHero" class="big-recommend-card"></div>
+          <div id="smartHintHero" class="empty-state" style="margin-top:16px;"></div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-header">
+          <div>
+            <h2 class="panel-title">網站點閱人次</h2>
+            <p class="panel-subtitle">目前為純前端版本，統計的是此瀏覽器本地累計值。</p>
+          </div>
+        </div>
+        <div class="traffic-body">
+          <div class="traffic-grid">
+            <div class="traffic-card">
+              <div class="traffic-label">本機累計點閱</div>
+              <div class="traffic-value" id="localViewCount">0</div>
+            </div>
+            <div class="traffic-card">
+              <div class="traffic-label">本次開啟序號</div>
+              <div class="traffic-value" id="sessionViewCount">0</div>
+            </div>
+          </div>
+          <p class="footer-note">
+            若要做成真正網站總點閱，需要改成由後端或資料庫統一累計，前端 alone 無法計算所有使用者的真實總瀏覽數。
+          </p>
+        </div>
+      </section>
     </section>
 
     <section class="layout">
@@ -541,7 +603,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">目前優惠組合</h2>
-              <p class="panel-subtitle">整合目前台灣麥當勞官網公開可見的優惠組合與套餐類型。</p>
+              <p class="panel-subtitle">整理目前官網常見的優惠類型與組合資訊。</p>
             </div>
           </div>
           <div class="offers-body">
@@ -616,26 +678,9 @@
             </div>
 
             <div>
-              <h3 class="recommend-title">已選組合</h3>
+              <h3 class="big-recommend-title" style="font-size:1.05rem; margin-bottom:10px;">已選組合</h3>
               <div id="selectedItems" class="selected-list"></div>
             </div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-header">
-            <div>
-              <h2 class="panel-title">智慧推薦結果</h2>
-              <p class="panel-subtitle">自動掃描所有主餐 + 附餐 + 飲料組合，找出預算內最佳選擇。</p>
-            </div>
-          </div>
-
-          <div class="recommend-body">
-            <div id="bestComboCard" class="highlight-card"></div>
-            <div id="smartHint" class="empty-state"></div>
-            <p class="footer-note">
-              CP 值公式：總飽足值 ÷ 總價格。未來只要擴充 menuData / officialOffers，就能接更多菜單、分類或 API。
-            </p>
           </div>
         </section>
       </aside>
@@ -677,15 +722,7 @@
           "吉事漢堡 + 紅茶(熱)",
           "4塊麥克雞塊 + 無糖綠茶(冰)(小)",
           "勁辣香雞翅(2塊) + 雪碧(小)",
-          "薯條(小) + 無糖紅茶(冰)(小)",
-          "大蛋捲冰淇淋 + 無糖綠茶(冰)(小)",
-          "蘋果派 + 可樂(小)",
-          "原味麥脆雞腿(1塊) + 雪碧(小)",
-          "辣味麥脆雞腿(1塊) + 檸檬風味紅茶(冰)(小)",
-          "麥克雙牛堡 + 檸檬風味紅茶(冰)(小)",
-          "麥香魚 + 雪碧(小)",
-          "6塊麥克雞塊 + 可樂(小)",
-          "OREO 冰炫風 + 檸檬風味紅茶(冰)(小)"
+          "蘋果派 + 可樂(小)"
         ]
       },
       {
@@ -703,23 +740,13 @@
       {
         title: "麥當勞分享盒",
         badge: "多人優惠",
-        summary: "多人聚餐可直接選分享盒，目前官網列出 5 種組合。",
+        summary: "多人聚餐可直接選分享盒。",
         items: [
           "麥脆雞腿分享盒(6塊)",
           "麥克雞塊分享盒(20塊)",
           "麥克雞塊分享盒(30塊)",
           "雞塊雞腿分享盒",
           "勁辣香雞翅分享盒"
-        ]
-      },
-      {
-        title: "2026 甜心卡",
-        badge: "優惠到 2027/3/31",
-        summary: "2026/3/18 開始販售至售完為止，買 A 送 B 類型優惠工具卡。",
-        items: [
-          "實體卡 + 數位序號",
-          "可於麥當勞 APP 使用甜心優惠券",
-          "適合搭配日常點餐做加價或贈品搭配"
         ]
       }
     ];
@@ -732,7 +759,9 @@
 
     const state = {
       budget: 200,
-      selectedIds: new Set()
+      selectedIds: new Set(),
+      localViews: 0,
+      sessionViews: 0
     };
 
     const allItems = Object.entries(menuData).flatMap(([category, items]) =>
@@ -748,9 +777,11 @@
       totalFill: document.getElementById("totalFill"),
       cpScore: document.getElementById("cpScore"),
       selectedItems: document.getElementById("selectedItems"),
-      bestComboCard: document.getElementById("bestComboCard"),
-      smartHint: document.getElementById("smartHint"),
-      offersGrid: document.getElementById("offersGrid")
+      bestComboHero: document.getElementById("bestComboHero"),
+      smartHintHero: document.getElementById("smartHintHero"),
+      offersGrid: document.getElementById("offersGrid"),
+      localViewCount: document.getElementById("localViewCount"),
+      sessionViewCount: document.getElementById("sessionViewCount")
     };
 
     function formatCurrency(value) {
@@ -842,7 +873,6 @@
               </div>
               <span class="item-badge">${item.badge}</span>
             </div>
-
             <div class="item-meta">
               <span class="meta-chip">價格 ${formatCurrency(item.price)}</span>
               <span class="meta-chip">飽足值 ${item.fill}</span>
@@ -884,7 +914,7 @@
       if (selectedItems.length === 0) {
         elements.selectedItems.innerHTML = `
           <div class="empty-state">
-            尚未選擇任何品項。你可以先自由點餐，或直接使用「智慧推薦」查看最佳 CP 套餐。
+            尚未選擇任何品項。你可以先自由點餐，或直接看上方智慧推薦。
           </div>
         `;
         return;
@@ -900,16 +930,16 @@
       const selectedStats = calculateStats(selectedItems);
 
       if (selectedItems.length === 0) {
-        elements.smartHint.innerHTML = `
-          你還沒開始點餐。上方推薦已經幫你算好目前預算內的最佳解，也可以先自己選，再讓系統比較。
+        elements.smartHintHero.innerHTML = `
+          你還沒開始點餐。上方這份就是目前預算內的最佳解，可以直接照著點，或自行挑選後再比較。
         `;
         return;
       }
 
       if (selectedStats.totalPrice > state.budget) {
-        elements.smartHint.innerHTML = `
+        elements.smartHintHero.innerHTML = `
           你目前總價是 <strong>${formatCurrency(selectedStats.totalPrice)}</strong>，
-          已超過預算 <strong>${formatCurrency(state.budget)}</strong>，建議參考上方推薦調整。
+          已超過預算 <strong>${formatCurrency(state.budget)}</strong>，建議參考推薦調整回預算內。
         `;
         return;
       }
@@ -918,13 +948,13 @@
       const priceGap = bestCombo.totalPrice - selectedStats.totalPrice;
 
       if (cpGap <= 0.01) {
-        elements.smartHint.innerHTML = `
+        elements.smartHintHero.innerHTML = `
           你目前這份搭配已經很接近最佳解了，現在 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>。
         `;
         return;
       }
 
-      elements.smartHint.innerHTML = `
+      elements.smartHintHero.innerHTML = `
         你目前的 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>，
         最佳套餐可提升到 <strong>${formatCp(bestCombo.cp)}</strong>。
         ${priceGap >= 0
@@ -934,44 +964,43 @@
       `;
     }
 
-    function renderBestCombo() {
+    function renderBestComboHero() {
       const bestCombo = findBestComboWithinBudget(state.budget);
       const fallbackCombo = findCheapestCombo();
 
       if (!bestCombo && fallbackCombo) {
-        elements.bestComboCard.innerHTML = `
-          <h3 class="recommend-title">預算不足以組成完整套餐</h3>
-          <p class="recommend-copy">
+        elements.bestComboHero.innerHTML = `
+          <h3 class="big-recommend-title">預算不足以組成完整套餐</h3>
+          <p class="big-recommend-copy">
             目前預算 <strong>${formatCurrency(state.budget)}</strong> 無法湊出主餐 + 附餐 + 飲料。
             最便宜的完整套餐需要 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong>。
           </p>
-          <div class="combo-list">
+          <div class="combo-list" style="margin-top:16px;">
             ${fallbackCombo.items.map((item) => `<span class="pill">${item.name}</span>`).join("")}
           </div>
         `;
-
-        elements.smartHint.innerHTML = `
-          建議提高預算到 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong> 以上，
-          或未來再加入更平價的菜單。
+        elements.smartHintHero.innerHTML = `
+          建議將預算提高到 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong> 以上。
         `;
         return;
       }
 
       if (!bestCombo) {
-        elements.bestComboCard.innerHTML = `
-          <h3 class="recommend-title">目前沒有可用推薦</h3>
-          <p class="recommend-copy">請先建立菜單資料。</p>
+        elements.bestComboHero.innerHTML = `
+          <h3 class="big-recommend-title">目前沒有可用推薦</h3>
+          <p class="big-recommend-copy">請先建立菜單資料。</p>
         `;
-        elements.smartHint.textContent = "暫時無法計算推薦結果。";
+        elements.smartHintHero.textContent = "暫時無法計算推薦結果。";
         return;
       }
 
-      elements.bestComboCard.innerHTML = `
-        <h3 class="recommend-title">最佳 CP 值推薦套餐</h3>
-        <p class="recommend-copy">
-          在 <strong>${formatCurrency(state.budget)}</strong> 預算內，這是目前最值得的完整套餐。
+      elements.bestComboHero.innerHTML = `
+        <h3 class="big-recommend-title">最佳 CP 值推薦套餐</h3>
+        <p class="big-recommend-copy">
+          在 <strong>${formatCurrency(state.budget)}</strong> 預算內，
+          這是目前最值得的完整套餐。
         </p>
-        <div class="combo-list">
+        <div class="combo-list" style="margin-top:16px;">
           ${bestCombo.items.map((item) => `<span class="pill">${item.name}</span>`).join("")}
         </div>
         <div class="recommend-metrics">
@@ -982,6 +1011,26 @@
       `;
 
       renderSmartHint(bestCombo);
+    }
+
+    function initViewCounter() {
+      const localKey = "mcd_kiosk_local_views";
+      const sessionKey = "mcd_kiosk_session_mark";
+
+      const previousLocalViews = Number(localStorage.getItem(localKey) || "0");
+      const sessionMarked = sessionStorage.getItem(sessionKey);
+
+      if (!sessionMarked) {
+        state.localViews = previousLocalViews + 1;
+        localStorage.setItem(localKey, String(state.localViews));
+        sessionStorage.setItem(sessionKey, "visited");
+      } else {
+        state.localViews = previousLocalViews;
+      }
+
+      state.sessionViews = state.localViews;
+      elements.localViewCount.textContent = state.localViews.toLocaleString("zh-TW");
+      elements.sessionViewCount.textContent = state.sessionViews.toLocaleString("zh-TW");
     }
 
     function updateBudget() {
@@ -1013,7 +1062,7 @@
       renderOffers();
       renderAllMenus();
       renderSelectedSummary();
-      renderBestCombo();
+      renderBestComboHero();
       bindMenuEvents();
     }
 
@@ -1024,6 +1073,7 @@
     }
 
     function init() {
+      initViewCounter();
       initEvents();
       updateUI();
     }
