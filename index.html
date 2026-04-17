@@ -6,20 +6,17 @@
   <title>麥當勞智慧推薦系統</title>
   <style>
     :root {
-      --bg: #180b06;
-      --bg-soft: #2b1209;
+      --bg: #160904;
+      --bg-soft: #2a1209;
       --panel: rgba(48, 19, 8, 0.84);
       --panel-strong: rgba(70, 26, 10, 0.94);
-      --card: linear-gradient(180deg, #fff4d7 0%, #ffd85b 100%);
-      --card-dark: linear-gradient(180deg, #4d1d0d 0%, #2b1008 100%);
       --accent: #ffbc0d;
-      --accent-2: #ffdd65;
-      --danger: #ff4d32;
+      --accent-2: #ffe17c;
+      --danger: #ff5a3d;
       --text: #fff7e4;
-      --muted: #f5d8a4;
-      --success: #73ffb3;
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
-      --glow: 0 0 0 1px rgba(255, 216, 91, 0.28), 0 10px 30px rgba(255, 164, 31, 0.18);
+      --muted: #f1d19d;
+      --shadow: 0 18px 42px rgba(0, 0, 0, 0.34);
+      --glow: 0 0 0 1px rgba(255, 216, 91, 0.26), 0 12px 30px rgba(255, 164, 31, 0.18);
       --radius-xl: 28px;
       --radius-lg: 20px;
       --radius-md: 16px;
@@ -43,9 +40,9 @@
     }
 
     .shell {
-      max-width: 1320px;
+      max-width: 1360px;
       margin: 0 auto;
-      padding: 32px 20px 56px;
+      padding: 28px 18px 48px;
     }
 
     .hero {
@@ -64,20 +61,12 @@
     .hero::after {
       content: "";
       position: absolute;
-      inset: auto -60px -60px auto;
-      width: 220px;
-      height: 220px;
+      inset: auto -50px -50px auto;
+      width: 200px;
+      height: 200px;
       border-radius: 50%;
-      background: radial-gradient(circle, rgba(255, 188, 13, 0.4), transparent 65%);
+      background: radial-gradient(circle, rgba(255, 188, 13, 0.36), transparent 65%);
       pointer-events: none;
-    }
-
-    .hero-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      flex-wrap: wrap;
     }
 
     .eyebrow {
@@ -95,44 +84,33 @@
 
     h1 {
       margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      line-height: 1.05;
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.08;
     }
 
     .hero p {
       margin: 0;
-      max-width: 780px;
       color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    .hero-badges {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-
-    .hero-badge {
-      padding: 10px 14px;
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      color: #ffeec1;
-      font-size: 0.95rem;
+      max-width: 880px;
+      line-height: 1.75;
     }
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(320px, 420px);
+      grid-template-columns: minmax(0, 1.5fr) minmax(320px, 420px);
       gap: 24px;
       align-items: start;
     }
 
-    .stack {
+    .stack,
+    .side-panel {
       display: grid;
       gap: 22px;
+    }
+
+    .side-panel {
+      position: sticky;
+      top: 16px;
     }
 
     .panel {
@@ -145,8 +123,8 @@
 
     .panel-header {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: flex-start;
       gap: 12px;
       padding: 22px 22px 0;
       flex-wrap: wrap;
@@ -162,9 +140,14 @@
       margin: 6px 0 0;
       color: var(--muted);
       font-size: 0.94rem;
+      line-height: 1.6;
     }
 
-    .controls {
+    .controls,
+    .menu-section,
+    .summary-body,
+    .recommend-body,
+    .offers-body {
       padding: 22px;
       display: grid;
       gap: 16px;
@@ -172,7 +155,7 @@
 
     .controls-grid {
       display: grid;
-      grid-template-columns: minmax(180px, 280px) 1fr;
+      grid-template-columns: minmax(220px, 320px) 1fr;
       gap: 16px;
       align-items: end;
     }
@@ -182,34 +165,42 @@
       font-size: 0.92rem;
       color: #ffe29d;
       margin-bottom: 8px;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .budget-wrap {
-      position: relative;
+    .budget-input {
+      display: flex;
+      align-items: center;
+      height: 56px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: linear-gradient(180deg, #fff9eb 0%, #ffe9a4 100%);
+      box-shadow: inset 0 2px 0 rgba(255,255,255,0.7);
     }
 
-    .budget-wrap span {
-      position: absolute;
-      left: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #7a3b0f;
-      font-weight: 800;
+    .budget-prefix {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 78px;
+      height: 100%;
+      background: linear-gradient(180deg, #ffe38e 0%, #ffc841 100%);
+      color: #623109;
+      font-weight: 900;
+      font-size: 1rem;
+      border-right: 1px solid rgba(98, 49, 9, 0.18);
     }
 
     input[type="number"] {
       width: 100%;
-      height: 54px;
-      padding: 0 14px 0 42px;
+      height: 100%;
+      padding: 0 16px;
       border: none;
-      border-radius: 16px;
-      background: linear-gradient(180deg, #fff9eb 0%, #ffe9a4 100%);
+      background: transparent;
       color: #3a180a;
       font-size: 1rem;
-      font-weight: 700;
+      font-weight: 800;
       outline: none;
-      box-shadow: inset 0 2px 0 rgba(255,255,255,0.75);
     }
 
     .actions {
@@ -226,8 +217,7 @@
       border-radius: 16px;
       font-weight: 800;
       font-size: 0.98rem;
-      letter-spacing: 0.02em;
-      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition), background var(--transition);
+      transition: transform var(--transition), box-shadow var(--transition), filter var(--transition);
     }
 
     .btn:active {
@@ -243,11 +233,6 @@
         0 18px 26px rgba(255, 160, 34, 0.28);
     }
 
-    .btn-primary:hover {
-      filter: brightness(1.04);
-      transform: translateY(-1px);
-    }
-
     .btn-secondary {
       color: #fff4df;
       background: linear-gradient(180deg, #7d3218 0%, #4c1e0f 100%);
@@ -257,37 +242,37 @@
         0 16px 24px rgba(0,0,0,0.22);
     }
 
-    .btn-secondary:hover {
-      filter: brightness(1.06);
+    .btn:hover {
+      filter: brightness(1.05);
       transform: translateY(-1px);
     }
 
-    .menu-section {
-      padding: 0 22px 22px;
-      display: grid;
-      gap: 18px;
-    }
-
-    .menu-grid {
+    .menu-grid,
+    .offers-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
-    .menu-card {
+    .menu-card,
+    .offer-card {
       position: relative;
       overflow: hidden;
       border: 1px solid rgba(255, 220, 135, 0.18);
       border-radius: 20px;
       background: rgba(255,255,255,0.05);
       padding: 16px;
-      min-height: 144px;
       transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition), background var(--transition);
       box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-      cursor: pointer;
     }
 
-    .menu-card:hover {
+    .menu-card {
+      cursor: pointer;
+      min-height: 144px;
+    }
+
+    .menu-card:hover,
+    .offer-card:hover {
       transform: translateY(-3px);
       border-color: rgba(255, 220, 135, 0.34);
       background: rgba(255,255,255,0.075);
@@ -315,7 +300,8 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.2);
     }
 
-    .item-top {
+    .item-top,
+    .offer-top {
       display: flex;
       justify-content: space-between;
       gap: 12px;
@@ -323,14 +309,16 @@
       margin-bottom: 10px;
     }
 
-    .item-name {
+    .item-name,
+    .offer-title {
       margin: 0;
       font-size: 1.08rem;
       font-weight: 800;
       color: #fff7de;
     }
 
-    .item-badge {
+    .item-badge,
+    .offer-badge {
       padding: 6px 10px;
       border-radius: 999px;
       background: rgba(255, 188, 13, 0.16);
@@ -340,7 +328,8 @@
       white-space: nowrap;
     }
 
-    .item-meta {
+    .item-meta,
+    .offer-meta {
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
@@ -355,27 +344,28 @@
       font-size: 0.88rem;
     }
 
-    .side-panel {
-      position: sticky;
-      top: 16px;
-      display: grid;
-      gap: 20px;
+    .offer-list {
+      margin: 12px 0 0;
+      padding-left: 18px;
+      color: #ffe9bf;
+      line-height: 1.75;
+      font-size: 0.92rem;
     }
 
-    .summary-body,
-    .recommend-body {
-      padding: 0 22px 22px;
-      display: grid;
-      gap: 16px;
-    }
-
-    .stats-grid {
+    .stats-grid,
+    .recommend-metrics {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 12px;
     }
 
-    .stat-card {
+    .recommend-metrics {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .stat-card,
+    .metric {
       padding: 14px;
       border-radius: 18px;
       background: rgba(255,255,255,0.06);
@@ -388,10 +378,21 @@
       margin-bottom: 6px;
     }
 
-    .stat-value {
-      font-size: 1.45rem;
+    .stat-value,
+    .metric strong {
+      font-size: 1.4rem;
       font-weight: 900;
       color: #fff6df;
+    }
+
+    .metric {
+      text-align: center;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.08rem;
     }
 
     .selected-list,
@@ -410,17 +411,19 @@
       border: 1px solid rgba(255,255,255,0.07);
     }
 
-    .empty-state {
+    .empty-state,
+    .highlight-card {
       padding: 18px;
-      border-radius: 18px;
+      border-radius: 20px;
+    }
+
+    .empty-state {
       background: rgba(255,255,255,0.05);
       color: var(--muted);
       line-height: 1.7;
     }
 
     .highlight-card {
-      padding: 18px;
-      border-radius: 22px;
       background:
         linear-gradient(180deg, rgba(255, 188, 13, 0.18), rgba(255, 89, 38, 0.12)),
         rgba(255,255,255,0.05);
@@ -435,43 +438,16 @@
     }
 
     .recommend-copy,
-    .hint {
+    .hint,
+    .footer-note {
       margin: 0;
       color: #ffe4ac;
       line-height: 1.7;
     }
 
-    .recommend-metrics {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 14px;
-    }
-
-    .metric {
-      padding: 12px;
-      border-radius: 16px;
-      background: rgba(0,0,0,0.18);
-      text-align: center;
-    }
-
-    .metric strong {
-      display: block;
-      color: white;
-      font-size: 1.12rem;
-      margin-top: 4px;
-    }
-
     .footer-note {
-      color: #d8b780;
       font-size: 0.88rem;
-      line-height: 1.6;
-    }
-
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255, 216, 91, 0.35), transparent);
-      margin: 4px 0;
+      color: #d8b780;
     }
 
     @media (max-width: 1080px) {
@@ -484,31 +460,25 @@
       }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 768px) {
       .shell {
-        padding: 18px 14px 40px;
-      }
-
-      .hero,
-      .panel {
-        border-radius: 22px;
+        padding: 16px 12px 36px;
       }
 
       .controls-grid,
       .menu-grid,
+      .offers-grid,
       .stats-grid,
       .recommend-metrics {
         grid-template-columns: 1fr;
       }
 
-      .panel-header {
-        padding: 18px 18px 0;
-      }
-
+      .panel-header,
       .controls,
       .menu-section,
       .summary-body,
-      .recommend-body {
+      .recommend-body,
+      .offers-body {
         padding-left: 18px;
         padding-right: 18px;
       }
@@ -521,28 +491,22 @@
       .btn {
         width: 100%;
       }
+
+      .budget-prefix {
+        min-width: 72px;
+      }
     }
   </style>
 </head>
 <body>
   <main class="shell">
     <section class="hero">
-      <div class="hero-top">
-        <div>
-          <div class="eyebrow">McKiosk Battle Mode</div>
-          <h1>麥當勞智慧推薦系統</h1>
-          <p>
-            選擇主餐、附餐、飲料，自動計算總價、飽足值與 CP 值，
-            同時找出目前預算下最值得點的推薦套餐。介面保留遊戲感與點擊回饋，
-            也方便未來擴充更多菜單、分類、API 或 AI 推薦。
-          </p>
-          <div class="hero-badges">
-            <div class="hero-badge">多分類可複選</div>
-            <div class="hero-badge">最佳 CP 自動推薦</div>
-            <div class="hero-badge">預算內智慧提示</div>
-          </div>
-        </div>
-      </div>
+      <div class="eyebrow">McKiosk Battle Mode</div>
+      <h1>麥當勞智慧推薦系統</h1>
+      <p>
+        自由選主餐、附餐、飲料，系統會即時計算總價、總品項數、飽足值與 CP 值，
+        並自動找出預算內最佳推薦套餐。下方也整合目前官網可見的優惠組合，讓 UI 更像自助點餐機。
+      </p>
     </section>
 
     <section class="layout">
@@ -551,7 +515,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">點餐控制台</h2>
-              <p class="panel-subtitle">設定預算後，可以自由挑選項目，也能一鍵查看最佳 CP 套餐。</p>
+              <p class="panel-subtitle">設定預算後，可以自由挑選，也能一鍵重算最佳 CP 套餐。</p>
             </div>
           </div>
 
@@ -559,8 +523,8 @@
             <div class="controls-grid">
               <div class="field">
                 <label for="budget">預算上限</label>
-                <div class="budget-wrap">
-                  <span>NT$</span>
+                <div class="budget-input">
+                  <span class="budget-prefix">NT$</span>
                   <input id="budget" type="number" min="0" step="1" value="200" />
                 </div>
               </div>
@@ -570,6 +534,18 @@
                 <button class="btn btn-secondary" id="clearButton" type="button">清空選擇</button>
               </div>
             </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2 class="panel-title">目前優惠組合</h2>
+              <p class="panel-subtitle">整合目前台灣麥當勞官網公開可見的優惠組合與套餐類型。</p>
+            </div>
+          </div>
+          <div class="offers-body">
+            <div id="offersGrid" class="offers-grid"></div>
           </div>
         </section>
 
@@ -589,7 +565,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">附餐選擇</h2>
-              <p class="panel-subtitle">可以自由複選，像遊戲裝備一樣疊加你的套餐配置。</p>
+              <p class="panel-subtitle">附餐可複選，會一起計入總價與 CP 值。</p>
             </div>
           </div>
           <div class="menu-section">
@@ -601,7 +577,7 @@
           <div class="panel-header">
             <div>
               <h2 class="panel-title">飲料選擇</h2>
-              <p class="panel-subtitle">飲料也會一起計入總價、總品項數與 CP 值。</p>
+              <p class="panel-subtitle">飲料也會一起計入套餐總數據。</p>
             </div>
           </div>
           <div class="menu-section">
@@ -639,8 +615,6 @@
               </div>
             </div>
 
-            <div class="section-divider"></div>
-
             <div>
               <h3 class="recommend-title">已選組合</h3>
               <div id="selectedItems" class="selected-list"></div>
@@ -660,7 +634,7 @@
             <div id="bestComboCard" class="highlight-card"></div>
             <div id="smartHint" class="empty-state"></div>
             <p class="footer-note">
-              CP 值公式：總飽足值 ÷ 總價格。你之後只要擴充 menuData，就能快速加入更多分類與新菜單。
+              CP 值公式：總飽足值 ÷ 總價格。未來只要擴充 menuData / officialOffers，就能接更多菜單、分類或 API。
             </p>
           </div>
         </section>
@@ -674,21 +648,81 @@
         { id: "big-mac", name: "大麥克", price: 75, fill: 82, badge: "經典王牌" },
         { id: "spicy-chicken", name: "勁辣雞腿堡", price: 85, fill: 88, badge: "香辣人氣" },
         { id: "mcchicken", name: "麥香雞", price: 65, fill: 72, badge: "平衡系" },
-        { id: "double-beef", name: "雙層牛肉吉事堡", price: 79, fill: 84, badge: "高爽感" }
+        { id: "double-beef", name: "雙層牛肉吉事堡", price: 79, fill: 84, badge: "高爽感" },
+        { id: "fish-burger", name: "麥香魚", price: 72, fill: 70, badge: "海味派" }
       ],
       sides: [
         { id: "fries-m", name: "薯條(中)", price: 55, fill: 46, badge: "必點王" },
         { id: "nuggets-6", name: "麥克雞塊 6 塊", price: 99, fill: 68, badge: "蛋白補給" },
-        { id: "corn-soup", name: "玉米濃湯", price: 45, fill: 31, badge: "暖胃系" },
-        { id: "salad", name: "生菜沙拉", price: 52, fill: 26, badge: "輕盈選" }
+        { id: "corn-soup", name: "玉米湯", price: 45, fill: 31, badge: "暖胃系" },
+        { id: "salad", name: "四季沙拉", price: 52, fill: 26, badge: "輕盈選" },
+        { id: "apple-pie", name: "蘋果派", price: 38, fill: 18, badge: "甜點派" }
       ],
       drinks: [
         { id: "cola", name: "可樂", price: 38, fill: 20, badge: "經典搭配" },
         { id: "sprite", name: "雪碧", price: 38, fill: 19, badge: "清爽感" },
-        { id: "iced-tea", name: "冰紅茶", price: 35, fill: 17, badge: "解膩系" },
-        { id: "hot-coffee", name: "熱咖啡", price: 45, fill: 14, badge: "提神型" }
+        { id: "iced-tea", name: "無糖紅茶(冰)", price: 35, fill: 17, badge: "解膩系" },
+        { id: "green-tea", name: "無糖綠茶(冰)", price: 35, fill: 17, badge: "輕茶感" },
+        { id: "coffee", name: "熱咖啡", price: 45, fill: 14, badge: "提神型" }
       ]
     };
+
+    const officialOffers = [
+      {
+        title: "1+1 星級點",
+        badge: "固定價 NT$69",
+        summary: "紅區選一個、白區選一個，吃的加喝的自由搭。",
+        items: [
+          "麥香雞 + 可樂(小)",
+          "吉事漢堡 + 紅茶(熱)",
+          "4塊麥克雞塊 + 無糖綠茶(冰)(小)",
+          "勁辣香雞翅(2塊) + 雪碧(小)",
+          "薯條(小) + 無糖紅茶(冰)(小)",
+          "大蛋捲冰淇淋 + 無糖綠茶(冰)(小)",
+          "蘋果派 + 可樂(小)",
+          "原味麥脆雞腿(1塊) + 雪碧(小)",
+          "辣味麥脆雞腿(1塊) + 檸檬風味紅茶(冰)(小)",
+          "麥克雙牛堡 + 檸檬風味紅茶(冰)(小)",
+          "麥香魚 + 雪碧(小)",
+          "6塊麥克雞塊 + 可樂(小)",
+          "OREO 冰炫風 + 檸檬風味紅茶(冰)(小)"
+        ]
+      },
+      {
+        title: "超值全餐配餐",
+        badge: "主餐加配餐",
+        summary: "超值全餐目前可選 5 種配餐型態。",
+        items: [
+          "經典配餐：中薯 + $38 冷/熱飲",
+          "清爽配餐：四季沙拉 + $38 冷/熱飲",
+          "勁脆配餐：麥脆雞腿一塊 + $38 冷/熱飲",
+          "炫冰配餐：OREO 冰炫風 + 小薯 + $38 冷/熱飲",
+          "豪吃配餐：6塊麥克雞塊 + 小薯 + $38 冷/熱飲"
+        ]
+      },
+      {
+        title: "麥當勞分享盒",
+        badge: "多人優惠",
+        summary: "多人聚餐可直接選分享盒，目前官網列出 5 種組合。",
+        items: [
+          "麥脆雞腿分享盒(6塊)",
+          "麥克雞塊分享盒(20塊)",
+          "麥克雞塊分享盒(30塊)",
+          "雞塊雞腿分享盒",
+          "勁辣香雞翅分享盒"
+        ]
+      },
+      {
+        title: "2026 甜心卡",
+        badge: "優惠到 2027/3/31",
+        summary: "2026/3/18 開始販售至售完為止，買 A 送 B 類型優惠工具卡。",
+        items: [
+          "實體卡 + 數位序號",
+          "可於麥當勞 APP 使用甜心優惠券",
+          "適合搭配日常點餐做加價或贈品搭配"
+        ]
+      }
+    ];
 
     const categoryMeta = {
       mains: { label: "主餐", elementId: "mainsGrid" },
@@ -715,7 +749,8 @@
       cpScore: document.getElementById("cpScore"),
       selectedItems: document.getElementById("selectedItems"),
       bestComboCard: document.getElementById("bestComboCard"),
-      smartHint: document.getElementById("smartHint")
+      smartHint: document.getElementById("smartHint"),
+      offersGrid: document.getElementById("offersGrid")
     };
 
     function formatCurrency(value) {
@@ -745,12 +780,9 @@
 
     function getNonEmptySubsets(items) {
       const subsets = [];
-
       for (let mask = 1; mask < (1 << items.length); mask += 1) {
-        const subset = items.filter((_, index) => (mask & (1 << index)) !== 0);
-        subsets.push(subset);
+        subsets.push(items.filter((_, index) => (mask & (1 << index)) !== 0));
       }
-
       return subsets;
     }
 
@@ -764,11 +796,9 @@
         for (const sides of sideSets) {
           for (const drinks of drinkSets) {
             const items = [...mains, ...sides, ...drinks];
-            const stats = calculateStats(items);
-
             combos.push({
               items,
-              ...stats
+              ...calculateStats(items)
             });
           }
         }
@@ -795,38 +825,51 @@
       const { elementId, label } = categoryMeta[categoryKey];
       const container = document.getElementById(elementId);
 
-      container.innerHTML = menuData[categoryKey]
-        .map((item) => {
-          const isSelected = state.selectedIds.has(item.id);
+      container.innerHTML = menuData[categoryKey].map((item) => {
+        const isSelected = state.selectedIds.has(item.id);
 
-          return `
-            <button
-              class="menu-card ${isSelected ? "selected" : ""}"
-              type="button"
-              data-item-id="${item.id}"
-              aria-pressed="${isSelected}"
-            >
-              <div class="item-top">
-                <div>
-                  <h3 class="item-name">${item.name}</h3>
-                  <div class="panel-subtitle">${label}</div>
-                </div>
-                <span class="item-badge">${item.badge}</span>
+        return `
+          <button
+            class="menu-card ${isSelected ? "selected" : ""}"
+            type="button"
+            data-item-id="${item.id}"
+            aria-pressed="${isSelected}"
+          >
+            <div class="item-top">
+              <div>
+                <h3 class="item-name">${item.name}</h3>
+                <div class="panel-subtitle">${label}</div>
               </div>
+              <span class="item-badge">${item.badge}</span>
+            </div>
 
-              <div class="item-meta">
-                <span class="meta-chip">價格 ${formatCurrency(item.price)}</span>
-                <span class="meta-chip">飽足值 ${item.fill}</span>
-                <span class="meta-chip">CP ${formatCp(item.fill / item.price)}</span>
-              </div>
-            </button>
-          `;
-        })
-        .join("");
+            <div class="item-meta">
+              <span class="meta-chip">價格 ${formatCurrency(item.price)}</span>
+              <span class="meta-chip">飽足值 ${item.fill}</span>
+              <span class="meta-chip">CP ${formatCp(item.fill / item.price)}</span>
+            </div>
+          </button>
+        `;
+      }).join("");
     }
 
     function renderAllMenus() {
       Object.keys(menuData).forEach(renderMenuSection);
+    }
+
+    function renderOffers() {
+      elements.offersGrid.innerHTML = officialOffers.map((offer) => `
+        <article class="offer-card">
+          <div class="offer-top">
+            <h3 class="offer-title">${offer.title}</h3>
+            <span class="offer-badge">${offer.badge}</span>
+          </div>
+          <p class="panel-subtitle">${offer.summary}</p>
+          <ul class="offer-list">
+            ${offer.items.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </article>
+      `).join("");
     }
 
     function renderSelectedSummary() {
@@ -852,18 +895,48 @@
         .join("");
     }
 
+    function renderSmartHint(bestCombo) {
+      const selectedItems = getSelectedItems();
+      const selectedStats = calculateStats(selectedItems);
+
+      if (selectedItems.length === 0) {
+        elements.smartHint.innerHTML = `
+          你還沒開始點餐。上方推薦已經幫你算好目前預算內的最佳解，也可以先自己選，再讓系統比較。
+        `;
+        return;
+      }
+
+      if (selectedStats.totalPrice > state.budget) {
+        elements.smartHint.innerHTML = `
+          你目前總價是 <strong>${formatCurrency(selectedStats.totalPrice)}</strong>，
+          已超過預算 <strong>${formatCurrency(state.budget)}</strong>，建議參考上方推薦調整。
+        `;
+        return;
+      }
+
+      const cpGap = bestCombo.cp - selectedStats.cp;
+      const priceGap = bestCombo.totalPrice - selectedStats.totalPrice;
+
+      if (cpGap <= 0.01) {
+        elements.smartHint.innerHTML = `
+          你目前這份搭配已經很接近最佳解了，現在 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>。
+        `;
+        return;
+      }
+
+      elements.smartHint.innerHTML = `
+        你目前的 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>，
+        最佳套餐可提升到 <strong>${formatCp(bestCombo.cp)}</strong>。
+        ${priceGap >= 0
+          ? `只要多花 <strong>${formatCurrency(priceGap)}</strong>`
+          : `甚至還能少花 <strong>${formatCurrency(Math.abs(priceGap))}</strong>`}
+        就能換到更好的配置。
+      `;
+    }
+
     function renderBestCombo() {
       const bestCombo = findBestComboWithinBudget(state.budget);
       const fallbackCombo = findCheapestCombo();
-
-      if (!bestCombo && !fallbackCombo) {
-        elements.bestComboCard.innerHTML = `
-          <h3 class="recommend-title">目前沒有可用推薦</h3>
-          <p class="recommend-copy">請先建立菜單資料。</p>
-        `;
-        elements.smartHint.innerHTML = `暫時無法計算推薦結果。`;
-        return;
-      }
 
       if (!bestCombo && fallbackCombo) {
         elements.bestComboCard.innerHTML = `
@@ -878,17 +951,25 @@
         `;
 
         elements.smartHint.innerHTML = `
-          建議將預算提高到 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong> 以上，
-          或未來擴充更平價的品項。
+          建議提高預算到 <strong>${formatCurrency(fallbackCombo.totalPrice)}</strong> 以上，
+          或未來再加入更平價的菜單。
         `;
+        return;
+      }
+
+      if (!bestCombo) {
+        elements.bestComboCard.innerHTML = `
+          <h3 class="recommend-title">目前沒有可用推薦</h3>
+          <p class="recommend-copy">請先建立菜單資料。</p>
+        `;
+        elements.smartHint.textContent = "暫時無法計算推薦結果。";
         return;
       }
 
       elements.bestComboCard.innerHTML = `
         <h3 class="recommend-title">最佳 CP 值推薦套餐</h3>
         <p class="recommend-copy">
-          在 <strong>${formatCurrency(state.budget)}</strong> 預算內，
-          目前最值得的完整套餐如下。
+          在 <strong>${formatCurrency(state.budget)}</strong> 預算內，這是目前最值得的完整套餐。
         </p>
         <div class="combo-list">
           ${bestCombo.items.map((item) => `<span class="pill">${item.name}</span>`).join("")}
@@ -903,69 +984,23 @@
       renderSmartHint(bestCombo);
     }
 
-    function renderSmartHint(bestCombo) {
-      const selectedItems = getSelectedItems();
-      const selectedStats = calculateStats(selectedItems);
-
-      if (selectedItems.length === 0) {
-        elements.smartHint.innerHTML = `
-          你還沒開始點餐。上方推薦已經幫你算好目前預算內的最強套餐，
-          也可以先自己選，再讓系統比較是不是有更好的搭配。
-        `;
-        return;
-      }
-
-      if (selectedStats.totalPrice > state.budget) {
-        elements.smartHint.innerHTML = `
-          你目前的選擇總價是 <strong>${formatCurrency(selectedStats.totalPrice)}</strong>，
-          已超過預算 <strong>${formatCurrency(state.budget)}</strong>。
-          可以參考上方推薦，把組合調整回預算內。
-        `;
-        return;
-      }
-
-      const cpGap = bestCombo.cp - selectedStats.cp;
-      const priceGap = bestCombo.totalPrice - selectedStats.totalPrice;
-
-      if (cpGap <= 0.01) {
-        elements.smartHint.innerHTML = `
-          你目前的搭配已經很接近最佳解了，現在 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>。
-          如果你重視個人口味，完全可以照目前這份點。
-        `;
-        return;
-      }
-
-      elements.smartHint.innerHTML = `
-        你目前的 CP 值是 <strong>${formatCp(selectedStats.cp)}</strong>，
-        還有更好的搭配可以提升到 <strong>${formatCp(bestCombo.cp)}</strong>。
-        ${priceGap >= 0
-          ? `只要多花 <strong>${formatCurrency(priceGap)}</strong>`
-          : `甚至還能少花 <strong>${formatCurrency(Math.abs(priceGap))}</strong>`}
-        ，就能換到更高效的套餐配置。
-      `;
-    }
-
     function updateBudget() {
-      const parsedValue = Number(elements.budgetInput.value);
-      state.budget = Number.isFinite(parsedValue) && parsedValue >= 0 ? parsedValue : 0;
+      const parsed = Number(elements.budgetInput.value);
+      state.budget = Number.isFinite(parsed) && parsed >= 0 ? parsed : 0;
     }
 
-    function updateUI() {
-      updateBudget();
-      renderAllMenus();
-      renderSelectedSummary();
-      renderBestCombo();
-      bindMenuEvents();
-    }
-
-    function toggleItemSelection(itemId) {
-      if (state.selectedIds.has(itemId)) {
-        state.selectedIds.delete(itemId);
-      } else {
-        state.selectedIds.add(itemId);
-      }
-
-      updateUI();
+    function bindMenuEvents() {
+      document.querySelectorAll("[data-item-id]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const itemId = button.dataset.itemId;
+          if (state.selectedIds.has(itemId)) {
+            state.selectedIds.delete(itemId);
+          } else {
+            state.selectedIds.add(itemId);
+          }
+          updateUI();
+        });
+      });
     }
 
     function clearSelection() {
@@ -973,12 +1008,13 @@
       updateUI();
     }
 
-    function bindMenuEvents() {
-      document.querySelectorAll("[data-item-id]").forEach((button) => {
-        button.addEventListener("click", () => {
-          toggleItemSelection(button.dataset.itemId);
-        });
-      });
+    function updateUI() {
+      updateBudget();
+      renderOffers();
+      renderAllMenus();
+      renderSelectedSummary();
+      renderBestCombo();
+      bindMenuEvents();
     }
 
     function initEvents() {
