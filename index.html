@@ -284,6 +284,23 @@
       text-align: center;
     }
 
+    .promo-panel {
+      margin-top: 20px;
+    }
+
+    .promo-image-wrap {
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .promo-image {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
     @media (max-width: 980px) {
       .items-grid {
         grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -349,6 +366,17 @@
       <section class="panel">
         <div class="panel-body">
           <div id="itemsGrid" class="items-grid"></div>
+        </div>
+      </section>
+
+      <section class="panel promo-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">甜心卡優惠</h2>
+        </div>
+        <div class="panel-body">
+          <div class="promo-image-wrap">
+            <img id="dessertCardImage" class="promo-image" alt="麥當勞甜心卡優惠圖">
+          </div>
         </div>
       </section>
     </section>
@@ -476,6 +504,51 @@
       </svg>
     `);
 
+    const dessertCardPromoSvg = encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 560">
+        <defs>
+          <radialGradient id="bg" cx="50%" cy="45%" r="70%">
+            <stop offset="0%" stop-color="#18a8d1"/>
+            <stop offset="100%" stop-color="#bfe12a"/>
+          </radialGradient>
+          <linearGradient id="panel" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="#b4f0f6"/>
+            <stop offset="100%" stop-color="#8ad8df"/>
+          </linearGradient>
+        </defs>
+        <rect width="1200" height="560" fill="url(#bg)"/>
+        <text x="52" y="82" fill="#ffe93a" font-size="56" font-weight="800" font-family="Segoe UI, sans-serif">\ NEW /</text>
+        <g transform="translate(34 116)">
+          <rect x="0" y="0" width="558" height="330" rx="14" fill="url(#panel)" stroke="#58b9c6" stroke-width="4"/>
+          <rect x="0" y="0" width="558" height="42" rx="14" fill="#0d3256"/>
+          <text x="279" y="31" text-anchor="middle" fill="#b8ebf5" font-size="32" font-weight="800" font-family="Segoe UI, sans-serif">A區</text>
+          <line x1="186" y1="42" x2="186" y2="330" stroke="#58b9c6" stroke-width="4"/>
+          <line x1="372" y1="42" x2="372" y2="330" stroke="#58b9c6" stroke-width="4"/>
+          <line x1="0" y1="186" x2="558" y2="186" stroke="#58b9c6" stroke-width="4"/>
+          <text x="56" y="108" fill="#fff" font-size="18" font-weight="800" font-family="Segoe UI, sans-serif">金選那堤、美式咖啡、卡布奇諾</text>
+          <text x="224" y="120" fill="#fff" font-size="20" font-weight="800" font-family="Segoe UI, sans-serif">蜂蜜紅茶、奶茶</text>
+          <text x="414" y="120" fill="#fff" font-size="20" font-weight="800" font-family="Segoe UI, sans-serif">中杯汽水、冰紅茶、綠茶</text>
+          <text x="48" y="264" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">4塊/6塊/10塊麥克雞塊</text>
+          <text x="240" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">大包薯條</text>
+          <text x="420" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">大杯玉米湯</text>
+        </g>
+        <g transform="translate(610 116)">
+          <rect x="0" y="0" width="558" height="330" rx="14" fill="url(#panel)" stroke="#58b9c6" stroke-width="4"/>
+          <rect x="0" y="0" width="558" height="42" rx="14" fill="#0d3256"/>
+          <text x="279" y="31" text-anchor="middle" fill="#b8ebf5" font-size="32" font-weight="800" font-family="Segoe UI, sans-serif">B區</text>
+          <line x1="186" y1="42" x2="186" y2="330" stroke="#58b9c6" stroke-width="4"/>
+          <line x1="372" y1="42" x2="372" y2="330" stroke="#58b9c6" stroke-width="4"/>
+          <line x1="0" y1="186" x2="558" y2="186" stroke="#58b9c6" stroke-width="4"/>
+          <text x="48" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">中杯汽水、中杯冰紅茶</text>
+          <text x="236" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">美式咖啡(冰/熱)</text>
+          <text x="438" y="120" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">薯餅</text>
+          <text x="76" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">蛋捲冰淇淋</text>
+          <text x="244" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">小包薯條</text>
+          <text x="436" y="262" fill="#fff" font-size="22" font-weight="800" font-family="Segoe UI, sans-serif">紅茶、奶茶</text>
+        </g>
+      </svg>
+    `);
+
     const beefDeluxeSvg = encodeURIComponent(`
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
         <ellipse cx="110" cy="152" rx="78" ry="20" fill="#482314" opacity=".22"/>
@@ -536,6 +609,7 @@
       selectedItemsText: document.getElementById("selectedItemsText"),
       backButton: document.getElementById("backButton"),
       resetButton: document.getElementById("resetButton"),
+      dessertCardImage: document.getElementById("dessertCardImage"),
       selectionScreen: document.getElementById("selectionScreen"),
       comboScreen: document.getElementById("comboScreen")
     };
@@ -663,6 +737,7 @@
     }
 
     function init() {
+      elements.dessertCardImage.src = `data:image/svg+xml;charset=UTF-8,${dessertCardPromoSvg}`;
       renderProducts();
       updateSelectionSummary();
       bindSelectionEvents();
