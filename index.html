@@ -165,16 +165,10 @@
       color: #fff6dd;
     }
 
-    .controls-grid,
     .items-grid,
     .combo-grid {
       display: grid;
       gap: 14px;
-    }
-
-    .controls-grid {
-      grid-template-columns: minmax(220px, 300px) 1fr;
-      align-items: end;
     }
 
     .items-grid {
@@ -183,46 +177,6 @@
 
     .combo-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 8px;
-      color: #ffe29d;
-      font-weight: 700;
-    }
-
-    .budget-input {
-      display: flex;
-      align-items: center;
-      height: 56px;
-      border-radius: 18px;
-      overflow: hidden;
-      background: linear-gradient(180deg, #fff9eb 0%, #ffe9a4 100%);
-    }
-
-    .budget-prefix {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 78px;
-      height: 100%;
-      background: linear-gradient(180deg, #ffe38e 0%, #ffc841 100%);
-      color: #623109;
-      font-weight: 900;
-      border-right: 1px solid rgba(98, 49, 9, 0.18);
-    }
-
-    input[type="number"] {
-      width: 100%;
-      height: 100%;
-      padding: 0 16px;
-      border: none;
-      background: transparent;
-      color: #3a180a;
-      font-size: 1rem;
-      font-weight: 800;
-      outline: none;
     }
 
     .actions {
@@ -362,8 +316,7 @@
 
     @media (max-width: 860px) {
       .items-grid,
-      .combo-grid,
-      .controls-grid {
+      .combo-grid {
         grid-template-columns: 1fr;
       }
 
@@ -391,7 +344,7 @@
       <h1>先選你想吃的單品，再看適合的套餐</h1>
       <p>
         這版改成更直覺的點餐方式。先點你現在最想吃的單品，下面就會直接列出相關套餐與價格，
-        不再顯示太多一般人看不懂的數字。
+        不再顯示太多一般人看不懂的數字，也不用另外輸入預算。
       </p>
       <div class="hero-stats">
         <span class="hero-chip">先選單品</span>
@@ -405,23 +358,14 @@
         <section class="panel">
           <div class="panel-header">
             <div>
-              <h2 class="panel-title">點餐條件</h2>
-              <p class="panel-subtitle">先輸入預算，再從下方選一個你今天最想吃的單品。</p>
+              <h2 class="panel-title">快速開始</h2>
+              <p class="panel-subtitle">直接從下方選一個你今天最想吃的單品，系統就會列出相關套餐。</p>
             </div>
           </div>
           <div class="panel-body">
-            <div class="controls-grid">
-              <div class="field">
-                <label for="budget">預算上限</label>
-                <div class="budget-input">
-                  <span class="budget-prefix">NT$</span>
-                  <input id="budget" type="number" min="0" step="1" value="200" />
-                </div>
-              </div>
-              <div class="actions">
-                <button class="btn btn-primary" id="recommendButton" type="button">重新篩選套餐</button>
-                <button class="btn btn-secondary" id="clearButton" type="button">清空選擇</button>
-              </div>
+            <div class="actions">
+              <button class="btn btn-primary" id="recommendButton" type="button">重新整理推薦</button>
+              <button class="btn btn-secondary" id="clearButton" type="button">清空選擇</button>
             </div>
           </div>
         </section>
@@ -478,10 +422,6 @@
             <div class="selection-card">
               <div class="selection-label">已選單品</div>
               <div class="selection-value" id="selectedItemName">尚未選擇</div>
-            </div>
-            <div class="selection-card" style="margin-top: 14px;">
-              <div class="selection-label">目前預算</div>
-              <div class="selection-value" id="selectedBudget">NT$200</div>
             </div>
             <div class="selection-card" style="margin-top: 14px;">
               <div class="selection-label">已找到套餐數量</div>
@@ -643,19 +583,16 @@
     ];
 
     const state = {
-      budget: 200,
       selectedProductId: null
     };
 
     const elements = {
-      budgetInput: document.getElementById("budget"),
       recommendButton: document.getElementById("recommendButton"),
       clearButton: document.getElementById("clearButton"),
       itemsGrid: document.getElementById("itemsGrid"),
       comboResults: document.getElementById("comboResults"),
       visitCount: document.getElementById("visitCount"),
       selectedItemName: document.getElementById("selectedItemName"),
-      selectedBudget: document.getElementById("selectedBudget"),
       comboCount: document.getElementById("comboCount"),
       selectedSummary: document.getElementById("selectedSummary")
     };
@@ -673,11 +610,9 @@
         return [];
       }
 
-      const matches = comboCatalog.filter((combo) => combo.items.includes(state.selectedProductId));
-      const withinBudget = matches.filter((combo) => combo.price <= state.budget);
-      const fallback = withinBudget.length > 0 ? withinBudget : matches;
-
-      return fallback.sort((a, b) => a.price - b.price);
+      return comboCatalog
+        .filter((combo) => combo.items.includes(state.selectedProductId))
+        .sort((a, b) => a.price - b.price);
     }
 
     function renderProducts() {
@@ -716,8 +651,8 @@
       if (combos.length === 0) {
         elements.comboResults.innerHTML = `
           <div class="empty-state" style="grid-column: 1 / -1;">
-            目前沒有找到符合 <strong>${selectedProduct.name}</strong> 且在 <strong>${formatCurrency(state.budget)}</strong> 預算內的套餐。
-            你可以提高預算，或換一個單品看看。
+            目前沒有找到和 <strong>${selectedProduct.name}</strong> 相關的套餐。
+            你可以換一個單品看看。
           </div>
         `;
         return;
@@ -746,9 +681,7 @@
               ${includedNames.map((name) => `<span class="summary-pill">${name}</span>`).join("")}
             </div>
             <div class="combo-note">
-              ${combo.price <= state.budget
-                ? `符合目前預算 ${formatCurrency(state.budget)}`
-                : `超出目前預算 ${formatCurrency(state.budget)}，這是相關套餐中的參考選項`}
+              這是和 ${selectedProduct.name} 相關的推薦搭配。
             </div>
           </article>
         `;
@@ -760,7 +693,6 @@
       const combos = getMatchingCombos();
 
       elements.selectedItemName.textContent = selectedProduct ? selectedProduct.name : "尚未選擇";
-      elements.selectedBudget.textContent = formatCurrency(state.budget);
       elements.comboCount.textContent = combos.length;
 
       if (!selectedProduct) {
@@ -805,8 +737,7 @@
     }
 
     function updateBudget() {
-      const value = Number(elements.budgetInput.value);
-      state.budget = Number.isFinite(value) && value >= 0 ? value : 0;
+      return;
     }
 
     function updateUI() {
@@ -818,7 +749,6 @@
     }
 
     function initEvents() {
-      elements.budgetInput.addEventListener("input", updateUI);
       elements.recommendButton.addEventListener("click", updateUI);
       elements.clearButton.addEventListener("click", clearSelection);
     }
