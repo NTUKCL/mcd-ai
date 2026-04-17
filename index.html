@@ -108,6 +108,17 @@
       margin-bottom: 18px;
     }
 
+    .selection-toolbar {
+      position: sticky;
+      top: 12px;
+      z-index: 20;
+      padding: 12px;
+      border-radius: 20px;
+      background: rgba(31, 11, 5, 0.82);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.22);
+    }
+
     .actions {
       margin-bottom: 18px;
     }
@@ -311,7 +322,7 @@
         <p class="subhead">可複選，完成後再進入下一步</p>
       </section>
 
-      <div class="toolbar">
+      <div class="toolbar selection-toolbar">
         <div class="selected-pill">已選 <span id="selectedCount">0</span> 項</div>
         <button class="btn btn-primary" id="nextButton" type="button" disabled>確認選擇</button>
       </div>
@@ -493,7 +504,8 @@
     ];
 
     const state = {
-      selectedProductIds: new Set()
+      selectedProductIds: new Set(),
+      currentScreen: "selection"
     };
 
     const elements = {
@@ -566,6 +578,7 @@
     }
 
     function showScreen(screenName) {
+      state.currentScreen = screenName;
       elements.selectionScreen.classList.toggle("active", screenName === "selection");
       elements.comboScreen.classList.toggle("active", screenName === "combo");
     }
@@ -584,7 +597,11 @@
 
     function goToComboScreen() {
       renderCombos();
+      if (state.currentScreen !== "combo") {
+        history.pushState({ screen: "combo" }, "", "#combos");
+      }
       showScreen("combo");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function resetAll() {
@@ -592,7 +609,15 @@
       renderProducts();
       updateSelectionSummary();
       bindSelectionEvents();
+      goToSelectionScreen(true);
+    }
+
+    function goToSelectionScreen(replaceHistory = false) {
+      if (replaceHistory) {
+        history.replaceState({ screen: "selection" }, "", window.location.pathname + window.location.search);
+      }
       showScreen("selection");
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
     function bindSelectionEvents() {
@@ -605,8 +630,17 @@
 
     function bindGlobalEvents() {
       elements.nextButton.addEventListener("click", goToComboScreen);
-      elements.backButton.addEventListener("click", () => showScreen("selection"));
+      elements.backButton.addEventListener("click", () => history.back());
       elements.resetButton.addEventListener("click", resetAll);
+      window.addEventListener("popstate", () => {
+        const isComboRoute = window.location.hash === "#combos";
+        if (isComboRoute && state.selectedProductIds.size > 0) {
+          renderCombos();
+          showScreen("combo");
+          return;
+        }
+        showScreen("selection");
+      });
     }
 
     function init() {
@@ -614,6 +648,7 @@
       updateSelectionSummary();
       bindSelectionEvents();
       bindGlobalEvents();
+      history.replaceState({ screen: "selection" }, "", window.location.pathname + window.location.search);
       showScreen("selection");
     }
 
