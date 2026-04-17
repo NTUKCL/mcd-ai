@@ -158,7 +158,7 @@
       cursor: pointer;
       padding: 14px 12px 16px;
       text-align: center;
-      min-height: 156px;
+      min-height: 132px;
     }
 
     .item-card:hover,
@@ -179,17 +179,17 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 72px;
-      margin-bottom: 10px;
+      height: 42px;
+      margin-bottom: 8px;
     }
 
     .item-image {
-      max-width: 76px;
-      max-height: 76px;
+      max-width: 38px;
+      max-height: 38px;
       width: auto;
       height: auto;
       object-fit: contain;
-      filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.24));
+      filter: drop-shadow(0 8px 10px rgba(0, 0, 0, 0.2));
     }
 
     .item-name {
@@ -324,7 +324,10 @@
 
       <div class="toolbar selection-toolbar">
         <div class="selected-pill">已選 <span id="selectedCount">0</span> 項</div>
-        <button class="btn btn-primary" id="nextButton" type="button" disabled>確認選擇</button>
+        <div class="actions" style="margin-bottom: 0;">
+          <button class="btn btn-secondary" id="selectionResetButton" type="button">重置</button>
+          <button class="btn btn-primary" id="nextButton" type="button" disabled>確認選擇</button>
+        </div>
       </div>
 
       <section class="panel">
@@ -511,6 +514,7 @@
     const elements = {
       selectedCount: document.getElementById("selectedCount"),
       nextButton: document.getElementById("nextButton"),
+      selectionResetButton: document.getElementById("selectionResetButton"),
       itemsGrid: document.getElementById("itemsGrid"),
       comboResults: document.getElementById("comboResults"),
       selectedItemsText: document.getElementById("selectedItemsText"),
@@ -630,6 +634,7 @@
 
     function bindGlobalEvents() {
       elements.nextButton.addEventListener("click", goToComboScreen);
+      elements.selectionResetButton.addEventListener("click", resetAll);
       elements.backButton.addEventListener("click", () => history.back());
       elements.resetButton.addEventListener("click", resetAll);
       window.addEventListener("popstate", () => {
